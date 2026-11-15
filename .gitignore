@@ -1,0 +1,24 @@
+# Compiler files
+cache/
+out/
+
+# Ignores development broadcast logs
+!/broadcast
+/broadcast/*/31337/
+/broadcast/**/dry-run/
+
+# Secrets — never commit keys or env files
+.env
+.env.*
+!.env.example
+.wallet.json
+*.key
+*.keystore
+keystores/
+
+# Python scratch
+__pycache__/
+venv/
+
+# Nested dependency of the vendored reactive-lib-omni (not used by this build)
+lib/reactive-lib-omni/lib/

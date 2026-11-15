@@ -1,0 +1,97 @@
+{
+  "project": "BillPilot",
+  "deployer": "0x755A0Cc89D400c1A08B2549c0CF8b72792E8864A",
+  "contracts": {
+    "BillVault": {
+      "chain": "Base Sepolia",
+      "chainId": 84532,
+      "address": "0x05Abd6e0a636B4D5ACB98540dc6b1f23D71F57b3",
+      "deploy_tx": "0xa14fff7e1d0aa01207dab289cf24272e1b82153cc04b90c134293e2401be3887"
+    },
+    "BillPilotReactive": {
+      "chain": "Reactive Lasna",
+      "chainId": 5318007,
+      "address": "0x35e3D4cdCd2EdFF55cDeb0c0710A8bF45e126871",
+      "deploy_tx": "0xec29b536dfad2ed4e081ad52f6298b0c35b4407dee11f02eb8387ba150aad0dc",
+      "constructor_value_lreact": "0.05"
+    },
+    "BillExecutor": {
+      "chain": "Base Sepolia",
+      "chainId": 84532,
+      "address": "0xFc2979342D96EeB950ba8246bCc8DF1868F3Df88",
+      "deploy_tx": "0x1dcc9965e777c5723da416c8e04e40f7cc028721ad6b4aeadd2b747ee721d2f7",
+      "callback_proxy": "0x476F44b11F5C942c58f4c8E3d0300E5710743585"
+    }
+  },
+  "faucet_lreact": {
+    "contract_base_sepolia": "0x2afaFD298b23b62760711756088F75B7409f5967",
+    "tx": "0x8530181737c4990106db074a1fbae49fd01df42e23220f2d028df720aa92d1cb",
+    "sent_eth": "0.0015",
+    "received_lreact": "0.15",
+    "method": "request(address)"
+  },
+  "wiring": {
+    "setExecutor_tx": "0x6becb8ca4bdd99b921fb35d26321fc97f8ddc233df107b2f57bd48a9a5b69fce",
+    "setRecipient_tx": "0xd2e6b188b54a67c06b63870fd1f73bcde4c9e7f4a76ccc99772f8e0a04d69b38"
+  },
+  "funding": {
+    "executor_depositTo_tx": "0xd218ac2c54870ca91351eeb63215d4e8ecc034bb0432a995ceb2cd7a91dc9a4d",
+    "executor_depositTo_eth": "0.0005",
+    "reactive_depositTo_tx": "0xe51b2941b70ad8e821105e279c84afab1b538622f4d602a7899f53592c278278",
+    "reactive_depositTo_lreact": "0.025"
+  },
+  "payees": [
+    {
+      "label": "Kos",
+      "address": "0x50A4DC43b954F6FB33F593eA90B78fAbB9f9Fcd0",
+      "loop1_amount_eth": "0.0006",
+      "loop2_amount_eth": "0.0003"
+    },
+    {
+      "label": "Langganan",
+      "address": "0x96C252b4Cb294ddcDd5E5BE53C74663b18605001",
+      "loop1_amount_eth": "0.0004",
+      "loop2_amount_eth": "0.0002"
+    }
+  ],
+  "setPayees_txs": [
+    "0x0be43bd6defe9e83fa5f1b3185f96e71a014ad45ee359738428762cf0bb86ce2",
+    "0xa5596e1a00c3ea72a5e93e494c76781b98c5257d0920b80b71eff29acadeae94"
+  ],
+  "loops": [
+    {
+      "loop": 1,
+      "deposit_tx": "0xf9000609969f46b30ed777a7d8480814a8f07b6251bd068c26237f5a4964be4f",
+      "deposit_eth": "0.0015",
+      "deposit_id": 1,
+      "reactive_tx": "0xf9057e084cace5328f8fde93251c2a14c6b82e197937cc1c0bcc6abf9f35c081",
+      "callback_tx": "0x58cd6b9a9720b89f62a2612da674056dd42fabdc74f75132f2e159ae34502ae6",
+      "latency_seconds_block_ts": 1,
+      "payees_paid": true
+    },
+    {
+      "loop": 2,
+      "deposit_tx": "0xf9813aafc4174daa545828300c44f3a5a3897853392c54916db295989861b166",
+      "deposit_eth": "0.001",
+      "deposit_id": 2,
+      "reactive_tx": "0xaa81edf6d42c3d77e3e4a178d14f7ba1b068ac0352ac9394e8af8575df809647",
+      "callback_tx": "0x37fac4ed222ab967c70a2818ddd2a1878b3a3ce5bc9e55c6eda8ab04e9a356d6",
+      "latency_seconds_block_ts": 3,
+      "payees_paid": true
+    }
+  ],
+  "final_balances": {
+    "wallet_base_eth": "0.00048593536734995",
+    "wallet_lasna_lreact": "0.0080614",
+    "wallet_sep_eth": "0.05",
+    "vault_base_eth": "0.001",
+    "executor_base_eth": "0",
+    "reactive_lasna_lreact": "0.0495376",
+    "reactive_debt": "0",
+    "reactive_reserves": "0",
+    "executor_debt": "0",
+    "executor_reserves": "494101110777236",
+    "getCallbacks_loop1": [],
+    "getCallbacks_loop2": []
+  }
+}
