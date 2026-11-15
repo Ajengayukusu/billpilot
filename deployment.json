@@ -45,18 +45,24 @@
       "label": "Kos",
       "address": "0x50A4DC43b954F6FB33F593eA90B78fAbB9f9Fcd0",
       "loop1_amount_eth": "0.0006",
-      "loop2_amount_eth": "0.0003"
+      "loop2_amount_eth": "0.0003",
+      "loop4_amount_eth": "0.0004",
+      "current_amount_eth": "0.0003"
     },
     {
       "label": "Langganan",
       "address": "0x96C252b4Cb294ddcDd5E5BE53C74663b18605001",
       "loop1_amount_eth": "0.0004",
-      "loop2_amount_eth": "0.0002"
+      "loop2_amount_eth": "0.0002",
+      "loop4_amount_eth": "0.0008",
+      "current_amount_eth": "0.0002"
     }
   ],
   "setPayees_txs": [
     "0x0be43bd6defe9e83fa5f1b3185f96e71a014ad45ee359738428762cf0bb86ce2",
-    "0xa5596e1a00c3ea72a5e93e494c76781b98c5257d0920b80b71eff29acadeae94"
+    "0xa5596e1a00c3ea72a5e93e494c76781b98c5257d0920b80b71eff29acadeae94",
+    "0x46a12a5987bfbbc1eed898f5b17fe0df337f930e9d9c377a6d30acf04596b717",
+    "0x114d6b5385d3c53484972cb4c8b14caddc13e1a3b7206c9cc480ed19e3125fc4"
   ],
   "loops": [
     {
@@ -89,21 +95,50 @@
       "latency_seconds_block_ts": 1,
       "payees_paid": true,
       "note": "Run 15 Nov 2026 for the demo video recording; history 6 records after, vault user balance 0.0009 ETH, debts 0/0"
+    },
+    {
+      "loop": 4,
+      "date": "2026-11-16",
+      "purpose": "Prove live the two paths loops 1-3 never exercised on-chain: PaymentSkipped (insufficient funds) and withdraw()",
+      "setpayees_tx": "0x46a12a5987bfbbc1eed898f5b17fe0df337f930e9d9c377a6d30acf04596b717",
+      "setpayees_amounts_eth": {"Kos": "0.0004", "Langganan": "0.0008"},
+      "withdraw1_tx": "0xfab12af2da95fe701c8f24fad2859b169eaf984cc880c82cb653d493b9e8604e",
+      "withdraw1_eth": "0.0009",
+      "deposit_tx": "0xb5c928eba2734f66f0f34a1edbc288985079927a0502495172db6acd561169bb",
+      "deposit_eth": "0.0005",
+      "deposit_id": 4,
+      "reactive_tx": "0x457bc158ae60f0ab7ea8cb42d1d0ab7d803b2316690b622952f90853e9464885",
+      "callback_tx": "0xd4c7f97d687f191c1210c77acfe860d72f519d3bbda9570bdb22ff812c889ad1",
+      "latency_seconds_block_ts": 1,
+      "callback_events": {
+        "PaymentMade": [{"payee": "0x50A4DC43b954F6FB33F593eA90B78fAbB9f9Fcd0", "amount_eth": "0.0004"}],
+        "PaymentSkipped": [{"payee": "0x96C252b4Cb294ddcDd5E5BE53C74663b18605001", "amount_eth": "0.0008"}]
+      },
+      "withdraw2_tx": "0x2d18d85db5f120930a541739796bed7b16ee2ae49584f4a7bdc097bcb00b83c5",
+      "withdraw2_eth": "0.0001",
+      "restore_setpayees_tx": "0x114d6b5385d3c53484972cb4c8b14caddc13e1a3b7206c9cc480ed19e3125fc4",
+      "history_records_after": 8,
+      "record7": {"payee": "Kos", "amount_eth": "0.0004", "paid": true, "depositId": 4},
+      "record8": {"payee": "Langganan", "amount_eth": "0.0008", "paid": false, "depositId": 4, "note": "first on-chain Skipped record"},
+      "vault_user_balance_after_eth": "0",
+      "debts_after": {"reactive": "0", "executor": "0"},
+      "note": "Payees restored to loop 2/3 demo values (Kos 0.0003 / Langganan 0.0002) after the run"
     }
   ],
   "final_balances": {
-    "wallet_base_eth": "0.000085667896458545",
+    "wallet_base_eth": "0.000582948131569936",
     "wallet_lasna_lreact": "0.0080614",
     "wallet_sep_eth": "0.05",
-    "vault_base_eth": "0.0009",
+    "vault_base_eth": "0",
     "executor_base_eth": "0",
-    "reactive_lasna_lreact": "0.0495376",
+    "reactive_lasna_lreact": "0.0240752",
     "reactive_debt": "0",
     "reactive_reserves": "0",
     "executor_debt": "0",
-    "executor_reserves": "494101110777236",
+    "executor_reserves": "488894522577236",
     "getCallbacks_loop1": [],
     "getCallbacks_loop2": [],
-    "history_records": "6"
+    "history_records": "8",
+    "as_of": "2026-11-16, after Loop 4"
   }
 }

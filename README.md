@@ -5,7 +5,7 @@
 Built for the **Reactive Omni Buildathon** (DoraHacks), track **Set It and Forget It**.
 Testnet only: **Base Sepolia** (origin + destination) and **Reactive Lasna** (reactive contract).
 
-📺 **Live dashboard:** https://ajengayukusu.github.io/billpilot/ — payees, vault balance, and payment history read live from Base Sepolia, plus the three proven end-to-end loops with explorer links for every hop.
+📺 **Live dashboard:** https://ajengayukusu.github.io/billpilot/ — payees, vault balance, and payment history read live from Base Sepolia, plus the proven end-to-end loops with explorer links for every hop.
 
 🎬 **Demo video (2:37):** https://www.youtube.com/watch?v=U4BfEKvNKlI — *BillPilot — Set It and Forget It: Automatic Bill Payments on Reactive Network*. A real screen recording of the live dashboard and the Loop 3 transactions on Basescan and Reactscan, with English narration.
 
@@ -55,7 +55,7 @@ BillPilot moves the ritual into the chain itself:
 - **Subscription** happens in the reactive contract's constructor: `SYSTEM.subscribe(84532, <BillVault>, topic0(DepositReceived(address,uint256,uint256)), REACTIVE_IGNORE, REACTIVE_IGNORE, REACTIVE_IGNORE)`.
 - **Callback** uses the current API — `SYSTEM.requestCallbackV_1_0(...)` with a 1,000,000 gas limit — *not* the deprecated `Callback` event. The first payload argument is the reserved sender slot: the reactive contract passes `address(0)` and the network overwrites it with the reactive contract's address, which `BillExecutor` authenticates with `onlyCallbackSender`.
 - **The reactive contract does real work**: it validates chain/contract/topic, decodes the depositor from `topic1` and `(amount, depositId)` from the log data, and routes the payout. Filtering is done by silently returning — never reverting (a revert in `react()` is still billed).
-- **Debt discipline**: both the reactive contract (lREACT, Lasna) and the callback receiver (ETH, Base Sepolia) are pre-funded via `depositTo(...)`. Any outstanding debt silently stops delivery in the Reactive Network, so debt is checked after every loop — it was **0 on both sides after all three live loops**.
+- **Debt discipline**: both the reactive contract (lREACT, Lasna) and the callback receiver (ETH, Base Sepolia) are pre-funded via `depositTo(...)`. Any outstanding debt silently stops delivery in the Reactive Network, so debt is checked after every loop — it was **0 on both sides after all four live loops**.
 
 ## Contracts
 
@@ -71,9 +71,9 @@ BillPilot moves the ritual into the chain itself:
 
 Deployment transactions: Vault [`0xa14fff…3887`](https://sepolia.basescan.org/tx/0xa14fff7e1d0aa01207dab289cf24272e1b82153cc04b90c134293e2401be3887) · Reactive [`0xec29b5…ad0dc`](https://lasna.reactscan.net/tx/0xec29b536dfad2ed4e081ad52f6298b0c35b4407dee11f02eb8387ba150aad0dc) · Executor [`0x1dcc99…1d2f7`](https://sepolia.basescan.org/tx/0x1dcc9965e777c5723da416c8e04e40f7cc028721ad6b4aeadd2b747ee721d2f7). Full deployment record: [`deployment.json`](deployment.json).
 
-## Proof — three full loops, live on testnet
+## Proof — four full loops, live on testnet
 
-All three loops ran end-to-end with **no human or bot in the middle**: the only transactions sent by the project wallet were the deposits (and, for loop 2, a `setPayees` update first). The reactive and callback transactions were produced by the Reactive Network itself. Loop 3 was run for the demo recording — watch it here: 🎬 https://www.youtube.com/watch?v=U4BfEKvNKlI
+In loops 1–3 the only transactions sent by the project wallet were the deposits (and, for loop 2, a `setPayees` update first) — the reactive and callback transactions were produced by the Reactive Network itself, with **no human or bot in the middle**. Loop 4 (below) wraps the same untouched reactive path in owner-side `setPayees` / `withdraw` transactions to prove the two paths loops 1–3 never exercised live: the insufficient-funds skip and `withdraw()`. Loop 3 was run for the demo recording — watch it here: 🎬 https://www.youtube.com/watch?v=U4BfEKvNKlI
 
 ### Loop 1 — deposit 0.0015 ETH (payees: Kos 0.0006, Langganan 0.0004)
 
@@ -104,6 +104,22 @@ All three loops ran end-to-end with **no human or bot in the middle**: the only 
 | Callback (Base Sepolia) | [`0x7321ab10…b7bdc`](https://sepolia.basescan.org/tx/0x7321ab10c4df58d5b7c33861c3d2dea1f0e69df1d4ae7f955adb7fa9ac0b7bdc) | `PayoutsExecuted` + 2× `PaymentMade` |
 
 **End-to-end latency: 1 s** (block timestamps). Both payees paid again; vault leftover 0.0009 ETH; on-chain history holds 6 records, all `paid: true`; debt 0 / 0 after. This is the loop shown in the [demo video](https://www.youtube.com/watch?v=U4BfEKvNKlI).
+
+### Loop 4 — deposit 0.0005 ETH, engineered shortfall: one payee paid, one skipped + `withdraw()` proven live twice (16 Nov 2026)
+
+Loops 1–3 always covered every payee, so the skip path and `withdraw()` were only proven in the Foundry suite. Loop 4 proves both **live on-chain**. Setup: payees re-set to Kos 0.0004 / Langganan 0.0008 (total 0.0012), the vault was emptied, and only 0.0005 was deposited — enough for Kos, deliberately not enough for Langganan.
+
+| Step | Transaction | Evidence |
+|---|---|---|
+| `setPayees` (Kos 0.0004, Langganan 0.0008) | [`0x46a12a59…6b717`](https://sepolia.basescan.org/tx/0x46a12a5987bfbbc1eed898f5b17fe0df337f930e9d9c377a6d30acf04596b717) | `PayeesUpdated(user, 2)` |
+| `withdraw()` #1 — entire leftover 0.0009 ETH out | [`0xfab12af2…604e`](https://sepolia.basescan.org/tx/0xfab12af2da95fe701c8f24fad2859b169eaf984cc880c82cb653d493b9e8604e) | `Withdrawn(user, 0.0009 ETH)` — vault balance → 0 |
+| Deposit (Base Sepolia) | [`0xb5c928eb…69bb`](https://sepolia.basescan.org/tx/0xb5c928eba2734f66f0f34a1edbc288985079927a0502495172db6acd561169bb) | `DepositReceived(user, 0.0005 ETH, depositId 4)` |
+| Reactive (Lasna) | [`0x457bc158…4885`](https://lasna.reactscan.net/tx/0x457bc158ae60f0ab7ea8cb42d1d0ab7d803b2316690b622952f90853e9464885) | `CallbackRequested(..., depositId 4, ...)` |
+| Callback (Base Sepolia) | [`0xd4c7f97d…ad1`](https://sepolia.basescan.org/tx/0xd4c7f97d687f191c1210c77acfe860d72f519d3bbda9570bdb22ff812c889ad1) | `PayoutsExecuted` + `PaymentMade` (Kos 0.0004) + **`PaymentSkipped` (Langganan 0.0008)** — remaining 0.0001 < 0.0008, batch did not revert |
+| `withdraw()` #2 — remaining 0.0001 ETH out | [`0x2d18d85d…83c5`](https://sepolia.basescan.org/tx/0x2d18d85db5f120930a541739796bed7b16ee2ae49584f4a7bdc097bcb00b83c5) | `Withdrawn(user, 0.0001 ETH)` — vault balance → 0 |
+| `setPayees` restore (Kos 0.0003, Langganan 0.0002) | [`0x114d6b53…fc4`](https://sepolia.basescan.org/tx/0x114d6b5385d3c53484972cb4c8b14caddc13e1a3b7206c9cc480ed19e3125fc4) | `PayeesUpdated(user, 2)` — demo payees restored |
+
+**End-to-end latency: 1 s** (block timestamps). The on-chain payment history now holds **8 records**: records 1–6 `paid: true` (loops 1–3), record 7 **Paid** (Kos, 0.0004 ETH, deposit 4), and record 8 **Skipped** (Langganan, 0.0008 ETH, deposit 4, `paid: false`) — the first on-chain `Skipped` record, demonstrating the insufficient-funds path end-to-end. `withdraw()` is now proven live twice (0.0009 ETH and 0.0001 ETH, vault emptied both times). Debt 0 / 0 after; payees restored to the demo values (Kos 0.0003, Langganan 0.0002), so the live dashboard state matches the demo narrative.
 
 ## Reproduce it
 
