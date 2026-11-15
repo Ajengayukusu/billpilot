@@ -5,7 +5,9 @@
 Built for the **Reactive Omni Buildathon** (DoraHacks), track **Set It and Forget It**.
 Testnet only: **Base Sepolia** (origin + destination) and **Reactive Lasna** (reactive contract).
 
-📺 **Live dashboard:** https://ajengayukusu.github.io/billpilot/ — payees, vault balance, and payment history read live from Base Sepolia, plus the two proven end-to-end loops with explorer links for every hop.
+📺 **Live dashboard:** https://ajengayukusu.github.io/billpilot/ — payees, vault balance, and payment history read live from Base Sepolia, plus the three proven end-to-end loops with explorer links for every hop.
+
+🎬 **Demo video (2:37):** https://www.youtube.com/watch?v=U4BfEKvNKlI — *BillPilot — Set It and Forget It: Automatic Bill Payments on Reactive Network*. A real screen recording of the live dashboard and the Loop 3 transactions on Basescan and Reactscan, with English narration.
 
 ---
 
@@ -53,7 +55,7 @@ BillPilot moves the ritual into the chain itself:
 - **Subscription** happens in the reactive contract's constructor: `SYSTEM.subscribe(84532, <BillVault>, topic0(DepositReceived(address,uint256,uint256)), REACTIVE_IGNORE, REACTIVE_IGNORE, REACTIVE_IGNORE)`.
 - **Callback** uses the current API — `SYSTEM.requestCallbackV_1_0(...)` with a 1,000,000 gas limit — *not* the deprecated `Callback` event. The first payload argument is the reserved sender slot: the reactive contract passes `address(0)` and the network overwrites it with the reactive contract's address, which `BillExecutor` authenticates with `onlyCallbackSender`.
 - **The reactive contract does real work**: it validates chain/contract/topic, decodes the depositor from `topic1` and `(amount, depositId)` from the log data, and routes the payout. Filtering is done by silently returning — never reverting (a revert in `react()` is still billed).
-- **Debt discipline**: both the reactive contract (lREACT, Lasna) and the callback receiver (ETH, Base Sepolia) are pre-funded via `depositTo(...)`. Any outstanding debt silently stops delivery in the Reactive Network, so debt is checked after every loop — it was **0 on both sides after both live loops**.
+- **Debt discipline**: both the reactive contract (lREACT, Lasna) and the callback receiver (ETH, Base Sepolia) are pre-funded via `depositTo(...)`. Any outstanding debt silently stops delivery in the Reactive Network, so debt is checked after every loop — it was **0 on both sides after all three live loops**.
 
 ## Contracts
 
@@ -69,9 +71,9 @@ BillPilot moves the ritual into the chain itself:
 
 Deployment transactions: Vault [`0xa14fff…3887`](https://sepolia.basescan.org/tx/0xa14fff7e1d0aa01207dab289cf24272e1b82153cc04b90c134293e2401be3887) · Reactive [`0xec29b5…ad0dc`](https://lasna.reactscan.net/tx/0xec29b536dfad2ed4e081ad52f6298b0c35b4407dee11f02eb8387ba150aad0dc) · Executor [`0x1dcc99…1d2f7`](https://sepolia.basescan.org/tx/0x1dcc9965e777c5723da416c8e04e40f7cc028721ad6b4aeadd2b747ee721d2f7). Full deployment record: [`deployment.json`](deployment.json).
 
-## Proof — two full loops, live on testnet
+## Proof — three full loops, live on testnet
 
-Both loops ran end-to-end with **no human or bot in the middle**: the only transactions sent by the project wallet were the deposits (and, for loop 2, a `setPayees` update first). The reactive and callback transactions were produced by the Reactive Network itself.
+All three loops ran end-to-end with **no human or bot in the middle**: the only transactions sent by the project wallet were the deposits (and, for loop 2, a `setPayees` update first). The reactive and callback transactions were produced by the Reactive Network itself. Loop 3 was run for the demo recording — watch it here: 🎬 https://www.youtube.com/watch?v=U4BfEKvNKlI
 
 ### Loop 1 — deposit 0.0015 ETH (payees: Kos 0.0006, Langganan 0.0004)
 
@@ -92,6 +94,16 @@ Both loops ran end-to-end with **no human or bot in the middle**: the only trans
 | Callback (Base Sepolia) | [`0x37fac4ed…56d6`](https://sepolia.basescan.org/tx/0x37fac4ed222ab967c70a2818ddd2a1878b3a3ce5bc9e55c6eda8ab04e9a356d6) | `PayoutsExecuted` + 2× `PaymentMade` |
 
 **End-to-end latency: 3 s** (block timestamps). Both payees paid in full (cumulative: Kos 0.0009 ETH, Langganan 0.0006 ETH); vault leftover 0.001 ETH; on-chain history holds 4 records, all `paid: true`; debt 0 / 0 after.
+
+### Loop 3 — deposit 0.0004 ETH (payees unchanged: Kos 0.0003, Langganan 0.0002) — the demo-video loop
+
+| Hop | Transaction | Evidence |
+|---|---|---|
+| Deposit (Base Sepolia) | [`0x94adef28…200e`](https://sepolia.basescan.org/tx/0x94adef28319ad0d588399c375622ddbe9a4293f0f6bcb6882f11459a1ef8200e) | `DepositReceived(user, 0.0004 ETH, depositId 3)` |
+| Reactive (Lasna) | [`0x6255d076…6f6df`](https://lasna.reactscan.net/tx/0x6255d07673badabb5aa73f98c9500ff9549039b3173d2a1dfd417f2f07c6f6df) | `CallbackRequested(..., depositId 3, ...)` |
+| Callback (Base Sepolia) | [`0x7321ab10…b7bdc`](https://sepolia.basescan.org/tx/0x7321ab10c4df58d5b7c33861c3d2dea1f0e69df1d4ae7f955adb7fa9ac0b7bdc) | `PayoutsExecuted` + 2× `PaymentMade` |
+
+**End-to-end latency: 1 s** (block timestamps). Both payees paid again; vault leftover 0.0009 ETH; on-chain history holds 6 records, all `paid: true`; debt 0 / 0 after. This is the loop shown in the [demo video](https://www.youtube.com/watch?v=U4BfEKvNKlI).
 
 ## Reproduce it
 
