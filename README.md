@@ -8,6 +8,7 @@ Testnet only: **Base Sepolia** (origin + destination) and **Reactive Lasna** (re
 📺 **Live dashboard:** https://ajengayukusu.github.io/billpilot/ — payees, vault balance, and payment history read live from Base Sepolia, plus the proven end-to-end loops with explorer links for every hop.
 
 🎬 **Demo video (2:37):** https://www.youtube.com/watch?v=U4BfEKvNKlI — *BillPilot — Set It and Forget It: Automatic Bill Payments on Reactive Network*. A real screen recording of the live dashboard and the Loop 3 transactions on Basescan and Reactscan, with English narration.
+🎬 **Update video — Loops 4–5 (1:09):** https://www.youtube.com/watch?v=NfYni0eHqd4 — *BillPilot — Update: Loops 4 & 5 (Live Proof)*. Post-submission live proof, recorded from the live dashboard and the explorers: the insufficient-funds PaymentSkipped path (Loop 4) and payee flexibility — a payee added and an amount changed (Loop 5).
 
 ---
 
