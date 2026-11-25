@@ -7,8 +7,8 @@ Testnet only: **Base Sepolia** (origin + destination) and **Reactive Lasna** (re
 
 📺 **Live dashboard:** https://ajengayukusu.github.io/billpilot/ — payees, vault balance, and payment history read live from Base Sepolia, plus the proven end-to-end loops with explorer links for every hop.
 
-🎬 **Demo video (2:37):** https://www.youtube.com/watch?v=U4BfEKvNKlI — *BillPilot — Set It and Forget It: Automatic Bill Payments on Reactive Network*. A real screen recording of the live dashboard and the Loop 3 transactions on Basescan and Reactscan, with English narration.
-🎬 **Update video — Loops 4–5 (1:09):** https://www.youtube.com/watch?v=NfYni0eHqd4 — *BillPilot — Update: Loops 4 & 5 (Live Proof)*. Post-submission live proof, recorded from the live dashboard and the explorers: the insufficient-funds PaymentSkipped path (Loop 4) and payee flexibility — a payee added and an amount changed (Loop 5).
+🎬 **Demo video (2:31):** https://www.youtube.com/watch?v=FTSUdFYLrSE — *BillPilot — Set It and Forget It: Automatic Bill Payments on Reactive Network*. A real screen recording of the live dashboard and the Loop 3 transactions on Basescan and Reactscan, with English narration.
+🎬 **Update video — Loops 4–5 (1:09):** https://www.youtube.com/watch?v=nn-XCDs7TvM — *BillPilot — Update: Loops 4 & 5 (Live Proof)*. Post-submission live proof, recorded from the live dashboard and the explorers: the insufficient-funds PaymentSkipped path (Loop 4) and payee flexibility — a payee added and an amount changed (Loop 5).
 
 ---
 
@@ -62,7 +62,7 @@ Deployment transactions: Vault [`0xa14fff…3887`](https://sepolia.basescan.org/
 
 ## Proof — five full loops, live on testnet
 
-In loops 1–3 the only transactions sent by the project wallet were the deposits (and, for loop 2, a `setPayees` update first) — the reactive and callback transactions were produced by the Reactive Network itself, with **no human or bot in the middle**. Loops 4–5 were run **after the DoraHacks submission** as additional live demonstrations, wrapping the same untouched reactive path in owner-side `setPayees` / `withdraw` transactions to prove the paths loops 1–3 never exercised live: the insufficient-funds skip and `withdraw()` (loop 4), and payee-list flexibility — adding a payee and changing an amount (loop 5). Loop 3 was run for the demo recording — watch it here: 🎬 https://www.youtube.com/watch?v=U4BfEKvNKlI
+In loops 1–3 the only transactions sent by the project wallet were the deposits (and, for loop 2, a `setPayees` update first) — the reactive and callback transactions were produced by the Reactive Network itself, with **no human or bot in the middle**. Loops 4–5 were run **after the DoraHacks submission** as additional live demonstrations, wrapping the same untouched reactive path in owner-side `setPayees` / `withdraw` transactions to prove the paths loops 1–3 never exercised live: the insufficient-funds skip and `withdraw()` (loop 4), and payee-list flexibility — adding a payee and changing an amount (loop 5). Loop 3 was run for the demo recording — watch it here: 🎬 https://www.youtube.com/watch?v=FTSUdFYLrSE
 
 ### All loops at a glance
 
@@ -103,7 +103,7 @@ In loops 1–3 the only transactions sent by the project wallet were the deposit
 | Reactive (Lasna) | [`0x6255d076…6f6df`](https://lasna.reactscan.net/tx/0x6255d07673badabb5aa73f98c9500ff9549039b3173d2a1dfd417f2f07c6f6df) | `CallbackRequested(..., depositId 3, ...)` |
 | Callback (Base Sepolia) | [`0x7321ab10…b7bdc`](https://sepolia.basescan.org/tx/0x7321ab10c4df58d5b7c33861c3d2dea1f0e69df1d4ae7f955adb7fa9ac0b7bdc) | `PayoutsExecuted` + 2× `PaymentMade` |
 
-**End-to-end latency: 1 s** (block timestamps). Both payees paid again; vault leftover 0.0009 ETH; on-chain history holds 6 records, all `paid: true`; debt 0 / 0 after. This is the loop shown in the [demo video](https://www.youtube.com/watch?v=U4BfEKvNKlI).
+**End-to-end latency: 1 s** (block timestamps). Both payees paid again; vault leftover 0.0009 ETH; on-chain history holds 6 records, all `paid: true`; debt 0 / 0 after. This is the loop shown in the [demo video](https://www.youtube.com/watch?v=FTSUdFYLrSE).
 
 ### Loop 4 — deposit 0.0005 ETH, engineered shortfall: one payee paid, one skipped + `withdraw()` proven live twice (16 Nov 2026)
 
@@ -152,7 +152,7 @@ Loops 1–4 always paid the same two payees. Loop 5 proves the payee list itself
 - **Execution** — It runs, end-to-end, on-chain: **five live loops** (six deposits → six reactive transactions → six callbacks, all produced by the network, none by a keeper) with 1–3 s end-to-end latency, a 14-record payment history (12 Paid, 2 Skipped), and **debt 0 on both sides after every loop**. Every hop of every loop is linked in the proof table above.
 - **Integration** — The current **Omni** pattern, not the legacy one: `reactive-lib-omni` v0.1.0, constructor subscription to a Base Sepolia event from Lasna, `SYSTEM.requestCallbackV_1_0`, delivery through the **official Base Sepolia callback proxy**, sender authentication via `onlyCallbackSender`. All three contracts are **Sourcify exact-match** verified (links in the contract table).
 - **Usefulness** — A real recurring chore (rent, subscriptions, installments) reduced to one action: deposit. Payees are set once and can be re-set at any time — Loop 5 proves a payee can be **added** and an amount **changed**, effective on the very next deposit. Underfunded payees are skipped and reported on-chain instead of failing the batch; leftovers stay withdrawable.
-- **Craft** — **36/36 Foundry tests** pass, including a local full-loop simulation run twice and dedicated skip/withdraw coverage; a **live dashboard** reads payees, balances, stats, and history straight from Base Sepolia (no backend); a 2:37 screen-recorded **demo video** shows Loop 3 on the real explorers; and this README documents the full proof trail, including the honest failure modes (debt discipline, the `getCallbacks` quirk noted in the deployment record).
+- **Craft** — **36/36 Foundry tests** pass, including a local full-loop simulation run twice and dedicated skip/withdraw coverage; a **live dashboard** reads payees, balances, stats, and history straight from Base Sepolia (no backend); a 2:31 screen-recorded **demo video** shows Loop 3 on the real explorers; and this README documents the full proof trail, including the honest failure modes (debt discipline, the `getCallbacks` quirk noted in the deployment record).
 
 ## Reproduce it
 
