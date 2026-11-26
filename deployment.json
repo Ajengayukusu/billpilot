@@ -41,7 +41,18 @@
     "reactive_depositTo_lreact": "0.025",
     "reactive_topup_loop5_tx": "0x1ccc9ae9ba6fae57edf395f7e3a114463e8df954f4bb1bd0be511b587675762c",
     "reactive_topup_loop5_lreact": "0.0024",
-    "reactive_topup_loop5_note": "Pre-Loop-5 funding guard (16 Nov 2026): reactive balance 0.0240752 + reserves 0 covered less than two more loops at the constant 0.0127312 lREACT/loop fee; depositTo added 0.0024 lREACT to reserves (gasUsed 51795 at 100 gwei). Executor reserves 0.00048889 ETH judged healthy, no Base top-up."
+    "reactive_topup_loop5_note": "Pre-Loop-5 funding guard (16 Nov 2026): reactive balance 0.0240752 + reserves 0 covered less than two more loops at the constant 0.0127312 lREACT/loop fee; depositTo added 0.0024 lREACT to reserves (gasUsed 51795 at 100 gwei). Executor reserves 0.00048889 ETH judged healthy, no Base top-up.",
+    "bridge_sep_to_base_loop6_tx": "0x4f9a35c1e12b035fce30a16fe1112862c06143ca291aaa52faab71ea6c5c37be",
+    "bridge_sep_to_base_loop6_eth": "0.002",
+    "bridge_sep_to_base_loop6_note": "Pre-Loop-6 funding (27 Nov 2026): official L1StandardBridge depositETHTo from Ethereum Sepolia to Base Sepolia; the deposit execution consumed ~737k L1 gas, so a first attempt with a 150k gas limit reverted (funds returned). An earlier misdirected attempt used the mainnet bridge address on Sepolia and lost 0.002 testnet ETH to a non-contract address.",
+    "faucet_lreact_loop6_tx": "0xe7f979da05890928d9557a084728cbb4b5fc8b17023aab598d26aa7adad3fe1e",
+    "faucet_lreact_loop6_sent_eth": "0.0002",
+    "faucet_lreact_loop6_received_lreact": "0.02",
+    "reactive_topup_loop6_tx": "0x30783b754191e6fcb635f12f77ad29e5cb7e80221a1f0ad3f5f278958e79d6a9",
+    "reactive_topup_loop6_lreact": "0.015",
+    "user2_funding_tx": "0x08ee238f6927eb7842e17fe90cba96dcdf330905970a8cb4908b355418bd53fa",
+    "user2_funding_eth": "0.0006",
+    "loop6_funding_note": "Coverage after top-up: 0.0160128 lREACT (balance 0.0010128 + reserves 0.015). Loop 6 fee was again exactly 0.0127312 lREACT, drawn from reserves (0.015 -> 0.0022688)."
   },
   "payees": [
     {
@@ -250,24 +261,86 @@
         "executor": "0"
       },
       "note": "Payees restored to the canonical demo/submission values (Kos 0.0003 / Langganan 0.0002); Internet removed from the live list but its records (11 Paid, 14 Skipped) remain in the on-chain history."
+    },
+    {
+      "loop": 6,
+      "date": "2026-11-27",
+      "purpose": "Prove the vault is multi-user: a second, independent wallet registers its own payee list and its deposit is paid through the same reactive path; the first user is completely untouched. Post-submission demonstration.",
+      "user": "0xD37e70552106B0c0bFB1612aB3Ee2b54CD1CB938",
+      "funding": {
+        "bridge_tx": "0x4f9a35c1e12b035fce30a16fe1112862c06143ca291aaa52faab71ea6c5c37be",
+        "bridge_eth": "0.002",
+        "faucet_tx": "0xe7f979da05890928d9557a084728cbb4b5fc8b17023aab598d26aa7adad3fe1e",
+        "faucet_sent_eth": "0.0002",
+        "faucet_received_lreact": "0.02",
+        "reactive_topup_tx": "0x30783b754191e6fcb635f12f77ad29e5cb7e80221a1f0ad3f5f278958e79d6a9",
+        "reactive_topup_lreact": "0.015",
+        "user2_funding_tx": "0x08ee238f6927eb7842e17fe90cba96dcdf330905970a8cb4908b355418bd53fa",
+        "user2_funding_eth": "0.0006"
+      },
+      "setpayees_tx": "0x7262b7e4cf65b2149d95f1a68ef080cf8c0e9b21d998df42825de94a6b440a64",
+      "setpayees_amounts_eth": {
+        "Kos": "0.0002",
+        "Internet": "0.0001"
+      },
+      "deposit_tx": "0x2ac94b1efefb8ff4a730fc9bfa87d6dcd8b0721cebb3bfa0799187fd2b5abb5a",
+      "deposit_eth": "0.0004",
+      "deposit_id": 7,
+      "reactive_tx": "0xad716fc60bc69d74fe56b8975d08f618d01830bf9fac9eefa104288d39a9b823",
+      "callback_tx": "0x62192c0a02a7421d43d3f46e490ebd3dd6248babd6d12b589e15154eb7237913",
+      "latency_seconds_block_ts": 1,
+      "callback_events": {
+        "PaymentMade": [
+          {
+            "payee": "0x50A4DC43b954F6FB33F593eA90B78fAbB9f9Fcd0",
+            "amount_eth": "0.0002"
+          },
+          {
+            "payee": "0x8C6b8c8C931f620bd353F491d6507c068c1A84ED",
+            "amount_eth": "0.0001"
+          }
+        ],
+        "PaymentSkipped": []
+      },
+      "payees_paid": true,
+      "user2_vault_balance_after_eth": "0.0001",
+      "user1_vault_balance_after_eth": "0.00004",
+      "vault_contract_eth_after": "0.00014",
+      "history_records_after_combined": 16,
+      "history_paid_after_combined": 14,
+      "history_skipped_after_combined": 2,
+      "total_paid_after_combined_eth": "0.00319",
+      "reactive_fee_lreact": "0.0127312",
+      "reactive_coverage_after_lreact": "0.0032816",
+      "executor_reserves_after_wei": "478722318777236",
+      "debts_after": {
+        "reactive": "0",
+        "executor": "0"
+      },
+      "note": "User 1 untouched by the run: 14 records (12 Paid / 2 Skipped, 0.00289 ETH), payees still Kos 0.0003 / Langganan 0.0002, vault balance still 0.00004 ETH. User 2's records are combined records 15-16, both Paid."
     }
   ],
   "final_balances": {
-    "wallet_base_eth": "0.000048734897872183",
-    "wallet_lasna_lreact": "0.0004819",
-    "wallet_sep_eth": "0.05",
-    "vault_base_eth": "0.00004",
+    "wallet_base_eth": "0.001248160591947757",
+    "wallet_lasna_lreact": "0.0003024",
+    "wallet_sep_eth": "0.046",
+    "user2_wallet_base_eth": "0.0001970979182343",
+    "user2_vault_balance_eth": "0.0001",
+    "vault_base_eth": "0.00014",
     "executor_base_eth": "0",
     "reactive_lasna_lreact": "0.0010128",
     "reactive_debt": "0",
-    "reactive_reserves": "0",
+    "reactive_reserves": "0.0022688",
+    "reactive_coverage_lreact": "0.0032816",
     "executor_debt": "0",
-    "executor_reserves": "481536571977236",
+    "executor_reserves": "478722318777236",
     "getCallbacks_loop1": [],
     "getCallbacks_loop2": [],
-    "history_records": "14",
-    "history_paid": "12",
+    "history_records": "16",
+    "history_paid": "14",
     "history_skipped": "2",
-    "as_of": "2026-11-16, after Loop 5 + dashboard/README maximal polish"
+    "history_note": "Combined across both users. User 1 alone: 14 records, 12 Paid, 2 Skipped, 0.00289 ETH paid, vault balance 0.00004 ETH. User 2: 2 records, both Paid, 0.0003 ETH paid.",
+    "total_deposits": "7",
+    "as_of": "2026-11-27, after Loop 6 (second user)"
   }
 }
