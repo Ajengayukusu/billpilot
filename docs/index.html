@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>BillPilot — Set-It-and-Forget-It Bill Autopay on Reactive Network</title>
-<meta name="description" content="BillPilot pays your fixed bills automatically the moment money lands in your vault — no bots, no keepers, no manual transfers. Powered by a Reactive Network (Omni) reactive contract.">
+<title>BillPilot · Set-It-and-Forget-It Bill Autopay on Reactive Network</title>
+<meta name="description" content="BillPilot pays your fixed bills automatically the moment money lands in your vault, no bots, no keepers, no manual transfers. Powered by a Reactive Network (Omni) reactive contract.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
@@ -170,8 +170,8 @@
 
   <div class="hero">
     <p class="eyebrow">Set It and Forget It · Reactive Omni Buildathon</p>
-    <h1>Fixed bills, paid the moment money lands — <span class="grad">by the chain itself.</span></h1>
-    <p class="statement">Register your payees once. Every deposit into your vault pays each payee their fixed amount automatically — <b>no bots, no keepers, no manual transfers</b>. Payees the balance can't cover are skipped and recorded on-chain; leftovers stay in the vault, withdrawable any time.</p>
+    <h1>Fixed bills, paid the moment money lands, <span class="grad">by the chain itself.</span></h1>
+    <p class="statement">Register your payees once. Every deposit into your vault pays each payee their fixed amount automatically, <b>no bots, no keepers, no manual transfers</b>. Payees the balance can't cover are skipped and recorded on-chain; leftovers stay in the vault, withdrawable any time.</p>
     <div class="steps">
       <div class="step"><span class="n">STEP 1 · BASE SEPOLIA</span><h3>Deposit</h3><p><span class="mono">deposit()</span> on BillVault credits your balance and emits <span class="mono">DepositReceived</span>.</p></div>
       <div class="arrow">→</div>
@@ -192,17 +192,17 @@
         <button id="refreshBtn" class="ghost">↻ Refresh</button>
       </div>
       <div class="stats">
-        <div class="stat"><div class="k">Vault balance (user)</div><div class="v" id="stBalance">—</div></div>
-        <div class="stat"><div class="k">ETH held by vault</div><div class="v" id="stVaultEth">—</div></div>
-        <div class="stat"><div class="k">Payees registered</div><div class="v" id="stPayees">—</div></div>
-        <div class="stat"><div class="k">Total deposits (all users)</div><div class="v" id="stDeposits">—</div></div>
+        <div class="stat"><div class="k">Vault balance (user)</div><div class="v" id="stBalance">…</div></div>
+        <div class="stat"><div class="k">ETH held by vault</div><div class="v" id="stVaultEth">…</div></div>
+        <div class="stat"><div class="k">Payees registered</div><div class="v" id="stPayees">…</div></div>
+        <div class="stat"><div class="k">Total deposits (all users)</div><div class="v" id="stDeposits">…</div></div>
       </div>
       <div class="stats five">
-        <div class="stat"><div class="k">Payment records</div><div class="v" id="stRecords">—</div></div>
-        <div class="stat ok"><div class="k">Paid</div><div class="v" id="stPaid">—</div></div>
-        <div class="stat warn"><div class="k">Skipped</div><div class="v" id="stSkipped">—</div></div>
-        <div class="stat"><div class="k">Total paid out</div><div class="v" id="stPaidOut">—</div></div>
-        <div class="stat"><div class="k">Vault balance</div><div class="v" id="stStripBalance">—</div></div>
+        <div class="stat"><div class="k">Payment records</div><div class="v" id="stRecords">…</div></div>
+        <div class="stat ok"><div class="k">Paid</div><div class="v" id="stPaid">…</div></div>
+        <div class="stat warn"><div class="k">Skipped</div><div class="v" id="stSkipped">…</div></div>
+        <div class="stat"><div class="k">Total paid out</div><div class="v" id="stPaidOut">…</div></div>
+        <div class="stat"><div class="k">Vault balance</div><div class="v" id="stStripBalance">…</div></div>
       </div>
       <h3 class="tbl-title">Payees</h3>
       <table>
@@ -218,7 +218,7 @@
   </section>
 
   <section>
-    <div class="sec-head"><h2>Contracts</h2><span class="sub">all three verified on Sourcify — exact match</span></div>
+    <div class="sec-head"><h2>Contracts</h2><span class="sub">all three verified on Sourcify · exact match</span></div>
     <div class="contracts">
       <div class="contract">
         <h3>BillVault</h3><div class="chain">Base Sepolia · chain 84532 · origin &amp; funds</div>
@@ -251,11 +251,11 @@
   </section>
 
   <section>
-    <div class="sec-head"><h2>Proven on-chain — six full loops</h2><span class="sub">deposit → reactive → callback for every loop · Loops 4–6 post-submission</span></div>
+    <div class="sec-head"><h2>Proven on-chain · six full loops</h2><span class="sub">deposit → reactive → callback for every loop · Loops 4–6 post-submission</span></div>
     <div class="loops">
       <div class="loop">
         <div class="loop-head"><h3>Loop 1 · deposit 0.0015 ETH</h3><span class="latency">⚡ 1 s end-to-end</span></div>
-        <p class="meta">Kos 0.0006 ETH · Langganan 0.0004 ETH — both paid in full. Vault leftover: 0.0005 ETH.</p>
+        <p class="meta">Kos 0.0006 ETH · Langganan 0.0004 ETH, both paid in full. Vault leftover: 0.0005 ETH.</p>
         <div class="flow">
           <div class="row"><div class="rail"><div class="node"></div><div class="bar"></div></div><div class="body"><div class="t">Deposit <span class="net">· Base Sepolia</span></div><div class="h"><a href="https://base-sepolia.blockscout.com/tx/0xf9000609969f46b30ed777a7d8480814a8f07b6251bd068c26237f5a4964be4f" target="_blank" rel="noopener">0xf9000609…be4f</a></div></div></div>
           <div class="row"><div class="rail"><div class="node"></div><div class="bar"></div></div><div class="body"><div class="t">Reactive <span class="net">· Lasna</span></div><div class="h"><a href="https://lasna.reactscan.net/tx/0xf9057e084cace5328f8fde93251c2a14c6b82e197937cc1c0bcc6abf9f35c081" target="_blank" rel="noopener">0xf9057e08…c081</a></div></div></div>
@@ -264,7 +264,7 @@
       </div>
       <div class="loop">
         <div class="loop-head"><h3>Loop 2 · deposit 0.001 ETH</h3><span class="latency">⚡ 3 s end-to-end</span></div>
-        <p class="meta">Payees re-set first: Kos 0.0003 ETH · Langganan 0.0002 ETH — both paid in full. Vault leftover: 0.001 ETH.</p>
+        <p class="meta">Payees re-set first: Kos 0.0003 ETH · Langganan 0.0002 ETH, both paid in full. Vault leftover: 0.001 ETH.</p>
         <div class="flow">
           <div class="row"><div class="rail"><div class="node"></div><div class="bar"></div></div><div class="body"><div class="t">Deposit <span class="net">· Base Sepolia</span></div><div class="h"><a href="https://base-sepolia.blockscout.com/tx/0xf9813aafc4174daa545828300c44f3a5a3897853392c54916db295989861b166" target="_blank" rel="noopener">0xf9813aaf…b166</a></div></div></div>
           <div class="row"><div class="rail"><div class="node"></div><div class="bar"></div></div><div class="body"><div class="t">Reactive <span class="net">· Lasna</span></div><div class="h"><a href="https://lasna.reactscan.net/tx/0xaa81edf6d42c3d77e3e4a178d14f7ba1b068ac0352ac9394e8af8575df809647" target="_blank" rel="noopener">0xaa81edf6…9647</a></div></div></div>
@@ -273,7 +273,7 @@
       </div>
       <div class="loop">
         <div class="loop-head"><h3>Loop 3 · deposit 0.0004 ETH</h3><span class="latency">⚡ 1 s end-to-end</span></div>
-        <p class="meta">The demo-video loop. Kos 0.0003 ETH · Langganan 0.0002 ETH — both paid again. Vault leftover: 0.0009 ETH. History reached 6 records, all Paid.</p>
+        <p class="meta">The demo-video loop. Kos 0.0003 ETH · Langganan 0.0002 ETH, both paid again. Vault leftover: 0.0009 ETH. History reached 6 records, all Paid.</p>
         <div class="flow">
           <div class="row"><div class="rail"><div class="node"></div><div class="bar"></div></div><div class="body"><div class="t">Deposit <span class="net">· Base Sepolia</span></div><div class="h"><a href="https://base-sepolia.blockscout.com/tx/0x94adef28319ad0d588399c375622ddbe9a4293f0f6bcb6882f11459a1ef8200e" target="_blank" rel="noopener">0x94adef28…200e</a></div></div></div>
           <div class="row"><div class="rail"><div class="node"></div><div class="bar"></div></div><div class="body"><div class="t">Reactive <span class="net">· Lasna</span></div><div class="h"><a href="https://lasna.reactscan.net/tx/0x6255d07673badabb5aa73f98c9500ff9549039b3173d2a1dfd417f2f07c6f6df" target="_blank" rel="noopener">0x6255d076…6f6df</a></div></div></div>
@@ -281,8 +281,8 @@
         </div>
       </div>
       <div class="loop">
-        <div class="loop-head"><h3>Loop 4 · deposit 0.0005 ETH — the skip path</h3><span class="latency">⚡ 1 s end-to-end</span></div>
-        <p class="meta">Post-submission · 16 Nov 2026. Payees re-set to Kos 0.0004 ETH · Langganan 0.0008 ETH, vault emptied, then a deliberately short deposit: Kos paid, Langganan <b>skipped</b> (<span class="mono">PaymentSkipped</span>, 0.0001 left &lt; 0.0008) — the first on-chain Skipped record. <span class="mono">withdraw()</span> proven live twice: <a href="https://base-sepolia.blockscout.com/tx/0xfab12af2da95fe701c8f24fad2859b169eaf984cc880c82cb653d493b9e8604e" target="_blank" rel="noopener">0.0009 ETH out</a> before, <a href="https://base-sepolia.blockscout.com/tx/0x2d18d85db5f120930a541739796bed7b16ee2ae49584f4a7bdc097bcb00b83c5" target="_blank" rel="noopener">0.0001 ETH out</a> after. Payees restored afterwards.</p>
+        <div class="loop-head"><h3>Loop 4 · deposit 0.0005 ETH · the skip path</h3><span class="latency">⚡ 1 s end-to-end</span></div>
+        <p class="meta">Post-submission · 16 Nov 2026. Payees re-set to Kos 0.0004 ETH · Langganan 0.0008 ETH, vault emptied, then a deliberately short deposit: Kos paid, Langganan <b>skipped</b> (<span class="mono">PaymentSkipped</span>, 0.0001 left &lt; 0.0008), the first on-chain Skipped record. <span class="mono">withdraw()</span> proven live twice: <a href="https://base-sepolia.blockscout.com/tx/0xfab12af2da95fe701c8f24fad2859b169eaf984cc880c82cb653d493b9e8604e" target="_blank" rel="noopener">0.0009 ETH out</a> before, <a href="https://base-sepolia.blockscout.com/tx/0x2d18d85db5f120930a541739796bed7b16ee2ae49584f4a7bdc097bcb00b83c5" target="_blank" rel="noopener">0.0001 ETH out</a> after. Payees restored afterwards.</p>
         <div class="flow">
           <div class="row"><div class="rail"><div class="node"></div><div class="bar"></div></div><div class="body"><div class="t">Deposit <span class="net">· Base Sepolia</span></div><div class="h"><a href="https://base-sepolia.blockscout.com/tx/0xb5c928eba2734f66f0f34a1edbc288985079927a0502495172db6acd561169bb" target="_blank" rel="noopener">0xb5c928eb…69bb</a></div></div></div>
           <div class="row"><div class="rail"><div class="node"></div><div class="bar"></div></div><div class="body"><div class="t">Reactive <span class="net">· Lasna</span></div><div class="h"><a href="https://lasna.reactscan.net/tx/0x457bc158ae60f0ab7ea8cb42d1d0ab7d803b2316690b622952f90853e9464885" target="_blank" rel="noopener">0x457bc158…4885</a></div></div></div>
@@ -290,12 +290,12 @@
         </div>
       </div>
       <div class="loop wide">
-        <div class="loop-head"><h3>Loop 5 · payee flexibility — a payee added, an amount changed</h3></div>
-        <p class="meta">Post-submission · 16 Nov 2026. A third payee, <b>Internet</b> (<span class="mono">0x8C6b…84ED</span>), joins the list; then Langganan's amount is raised and the next deposit pays the <i>new</i> amount — <span class="mono">setPayees</span> changes take effect on the very next loop. Payees restored to Kos 0.0003 · Langganan 0.0002 afterwards, so the live state above matches Loops 1–3.</p>
+        <div class="loop-head"><h3>Loop 5 · payee flexibility · a payee added, an amount changed</h3></div>
+        <p class="meta">Post-submission · 16 Nov 2026. A third payee, <b>Internet</b> (<span class="mono">0x8C6b…84ED</span>), joins the list; then Langganan's amount is raised and the next deposit pays the <i>new</i> amount, <span class="mono">setPayees</span> changes take effect on the very next loop. Payees restored to Kos 0.0003 · Langganan 0.0002 afterwards, so the live state above matches Loops 1–3.</p>
         <div class="grid2">
           <div>
-            <div class="loop-head"><h3 style="font-size:15px">5a · deposit 0.00027 ETH — three payees, all paid</h3><span class="latency">⚡ 1 s</span></div>
-            <p class="meta">Kos 0.0001 · Langganan 0.00006 · Internet 0.00008 — 3× PaymentMade. Vault leftover: 0.00003 ETH.</p>
+            <div class="loop-head"><h3 style="font-size:15px">5a · deposit 0.00027 ETH · three payees, all paid</h3><span class="latency">⚡ 1 s</span></div>
+            <p class="meta">Kos 0.0001 · Langganan 0.00006 · Internet 0.00008, 3× PaymentMade. Vault leftover: 0.00003 ETH.</p>
             <div class="flow">
               <div class="row"><div class="rail"><div class="node"></div><div class="bar"></div></div><div class="body"><div class="t">Deposit <span class="net">· Base Sepolia</span></div><div class="h"><a href="https://base-sepolia.blockscout.com/tx/0x109072adeeade37b7db85fcc4da78349b33a86e03db043ae2dd9560b7b63ce8d" target="_blank" rel="noopener">0x109072ad…ce8d</a></div></div></div>
               <div class="row"><div class="rail"><div class="node"></div><div class="bar"></div></div><div class="body"><div class="t">Reactive <span class="net">· Lasna</span></div><div class="h"><a href="https://lasna.reactscan.net/tx/0x5172643b187d7081496fd4e9d4b9ad29599452391d40b73818fb7727f8aa8504" target="_blank" rel="noopener">0x5172643b…8504</a></div></div></div>
@@ -303,7 +303,7 @@
             </div>
           </div>
           <div>
-            <div class="loop-head"><h3 style="font-size:15px">5b · deposit 0.00026 ETH — new amount paid, one skip</h3><span class="latency">⚡ 2 s</span></div>
+            <div class="loop-head"><h3 style="font-size:15px">5b · deposit 0.00026 ETH · new amount paid, one skip</h3><span class="latency">⚡ 2 s</span></div>
             <p class="meta">Langganan raised 0.00006 → 0.00015 and <b>paid at the new amount</b>; Kos paid 0.0001; Internet skipped (0.00004 left &lt; 0.00008). History reached 14 records: 12 Paid · 2 Skipped.</p>
             <div class="flow">
               <div class="row"><div class="rail"><div class="node"></div><div class="bar"></div></div><div class="body"><div class="t">Deposit <span class="net">· Base Sepolia</span></div><div class="h"><a href="https://base-sepolia.blockscout.com/tx/0xb7d9e5808c49111cd10c34ff8836ea3426f17c0ceb657d43ac8472d58f173447" target="_blank" rel="noopener">0xb7d9e580…3447</a></div></div></div>
@@ -314,8 +314,8 @@
         </div>
       </div>
       <div class="loop">
-        <div class="loop-head"><h3>Loop 6 · deposit 0.0004 ETH — a second, independent user</h3><span class="latency">⚡ 1 s end-to-end</span></div>
-        <p class="meta">Post-submission · 27 Nov 2026. A fresh wallet (<span class="mono">0xD37e…B938</span>) set its own payees — Kos 0.0002 ETH · Internet 0.0001 ETH — and deposited 0.0004 ETH. The same vault, reactive contract and executor paid both payees in full, no configuration change; the first user left completely untouched. History reached 16 records: 14 Paid · 2 Skipped.</p>
+        <div class="loop-head"><h3>Loop 6 · deposit 0.0004 ETH · a second, independent user</h3><span class="latency">⚡ 1 s end-to-end</span></div>
+        <p class="meta">Post-submission · 27 Nov 2026. A fresh wallet (<span class="mono">0xD37e…B938</span>) set its own payees, Kos 0.0002 ETH · Internet 0.0001 ETH, and deposited 0.0004 ETH. The same vault, reactive contract and executor paid both payees in full, no configuration change; the first user left completely untouched. History reached 16 records: 14 Paid · 2 Skipped.</p>
         <div class="flow">
           <div class="row"><div class="rail"><div class="node"></div><div class="bar"></div></div><div class="body"><div class="t">Deposit <span class="net">· Base Sepolia</span></div><div class="h"><a href="https://base-sepolia.blockscout.com/tx/0x2ac94b1efefb8ff4a730fc9bfa87d6dcd8b0721cebb3bfa0799187fd2b5abb5a" target="_blank" rel="noopener">0x2ac94b1e…bb5a</a></div></div></div>
           <div class="row"><div class="rail"><div class="node"></div><div class="bar"></div></div><div class="body"><div class="t">Reactive <span class="net">· Lasna</span></div><div class="h"><a href="https://lasna.reactscan.net/tx/0xad716fc60bc69d74fe56b8975d08f618d01830bf9fac9eefa104288d39a9b823" target="_blank" rel="noopener">0xad716fc6…b823</a></div></div></div>
@@ -326,7 +326,7 @@
   </section>
 
   <footer>
-    BillPilot · built for the Reactive Omni Buildathon (DoraHacks), track <b>Set It and Forget It</b> · Testnet only — Base Sepolia + Reactive Lasna · Debt after all six loops: 0 on both sides · <a href="https://github.com/Ajengayukusu/billpilot" target="_blank" rel="noopener">Source on GitHub</a>
+    BillPilot · built for the Reactive Omni Buildathon (DoraHacks), track <b>Set It and Forget It</b> · Testnet only · Base Sepolia + Reactive Lasna · Debt after all six loops: 0 on both sides · <a href="https://github.com/Ajengayukusu/billpilot" target="_blank" rel="noopener">Source on GitHub</a>
   </footer>
 </div>
 
@@ -370,7 +370,7 @@ async function connect() {
     } catch (e) { /* try next RPC */ }
   }
   $("statusDot").className = "dot err";
-  $("statusText").textContent = "RPC unreachable — check connection and refresh";
+  $("statusText").textContent = "RPC unreachable, check connection and refresh";
   return false;
 }
 
@@ -384,7 +384,7 @@ async function load() {
     return;
   }
   if (!vault && !(await connect())) {
-    err.textContent = "Could not reach any Base Sepolia RPC. The live tables can't load right now — the contract and loop proof below are unaffected.";
+    err.textContent = "Could not reach any Base Sepolia RPC. The live tables can't load right now, the contract and loop proof below are unaffected.";
     err.style.display = "block";
     return;
   }
@@ -424,7 +424,7 @@ async function load() {
     for (const [a, l] of KNOWN_LABELS) if (!labelByAddr.has(a)) labelByAddr.set(a, l);
 
     $("payeeBody").innerHTML = payees.length === 0
-      ? `<tr><td colspan="3" class="empty">No payees registered for this user yet — call setPayees() on BillVault to add some.</td></tr>`
+      ? `<tr><td colspan="3" class="empty">No payees registered for this user yet, call setPayees() on BillVault to add some.</td></tr>`
       : payees.map((p) => `<tr>
            <td><b>${esc(p.label)}</b></td>
            <td class="mono"><a href="https://sepolia.basescan.org/address/${p.wallet}" target="_blank" rel="noopener" title="${p.wallet}">${short(p.wallet)}</a></td>
@@ -442,7 +442,7 @@ async function load() {
             <td>${label ? `<b>${esc(label)}</b> · ` : ""}<span class="mono"><a href="https://sepolia.basescan.org/address/${r.payee}" target="_blank" rel="noopener" title="${r.payee}">${short(r.payee)}</a></span></td>
             <td class="mono">#${r.depositId}</td>
             <td class="amt" style="text-align:right">${fmtEth(r.amount)}</td>
-            <td style="text-align:right"><span class="badge ${r.paid ? "paid" : "skipped"}">${r.paid ? "✓ Paid" : "Skipped — insufficient balance"}</span></td>
+            <td style="text-align:right"><span class="badge ${r.paid ? "paid" : "skipped"}">${r.paid ? "✓ Paid" : "Skipped · insufficient balance"}</span></td>
           </tr>`;
         }).join("");
 
@@ -450,7 +450,7 @@ async function load() {
     $("statusDot").className = "dot on";
     $("statusText").textContent = `live · Base Sepolia block ${n.toLocaleString()}`;
   } catch (e) {
-    err.textContent = "Reading the vault failed (" + (e.shortMessage || e.message || e) + "). Try Refresh in a few seconds — public RPCs rate-limit occasionally.";
+    err.textContent = "Reading the vault failed (" + (e.shortMessage || e.message || e) + "). Try Refresh in a few seconds, public RPCs rate-limit occasionally.";
     err.style.display = "block";
   } finally {
     $("loadBtn").disabled = false; $("refreshBtn").disabled = false;
