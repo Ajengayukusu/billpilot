@@ -5,105 +5,149 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>BillPilot — Set-It-and-Forget-It Bill Autopay on Reactive Network</title>
 <meta name="description" content="BillPilot pays your fixed bills automatically the moment money lands in your vault — no bots, no keepers, no manual transfers. Powered by a Reactive Network (Omni) reactive contract.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
 <style>
   :root{
-    --bg:#070b14; --bg2:#0b1120; --card:#0e1628; --card2:#111c33;
-    --line:#1d2c4a; --line2:#27395e;
-    --txt:#e8eefb; --mut:#93a5c8; --dim:#64769c;
-    --acc:#4da3ff; --acc2:#7c5cff; --ok:#2fd48c; --warn:#ffb648; --bad:#ff6b81;
-    --mono:ui-monospace,'SF Mono',SFMono-Regular,Menlo,Consolas,monospace;
-    --sans:-apple-system,BlinkMacSystemFont,'Segoe UI',Inter,Roboto,Helvetica,Arial,sans-serif;
-    --r:16px;
+    --bg:#04070d; --bg2:#060b16;
+    --panel:rgba(13,22,40,.72); --panel2:rgba(17,29,52,.6);
+    --line:rgba(110,150,220,.15); --line2:rgba(110,150,220,.28);
+    --txt:#eef3ff; --mut:#9db0d4; --dim:#63769c;
+    --teal:#2dd4bf; --blue:#4da3ff; --sky:#38bdf8;
+    --ok:#34d399; --warn:#fbbf24; --bad:#fb7185;
+    --mono:'JetBrains Mono',ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+    --sans:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;
+    --disp:'Space Grotesk','Inter',sans-serif;
+    --r:18px;
   }
   *{box-sizing:border-box}
   html{scroll-behavior:smooth}
-  body{margin:0;background:radial-gradient(1100px 500px at 85% -10%,rgba(124,92,255,.16),transparent 60%),radial-gradient(900px 480px at -10% 0%,rgba(77,163,255,.13),transparent 55%),var(--bg);color:var(--txt);font-family:var(--sans);line-height:1.55}
-  a{color:var(--acc);text-decoration:none}
+  body{margin:0;color:var(--txt);font-family:var(--sans);line-height:1.55;-webkit-font-smoothing:antialiased;
+    background:
+      radial-gradient(1000px 520px at 88% -8%,rgba(45,212,191,.13),transparent 60%),
+      radial-gradient(900px 560px at -12% 4%,rgba(77,163,255,.14),transparent 55%),
+      radial-gradient(1200px 700px at 50% 115%,rgba(56,189,248,.07),transparent 60%),
+      linear-gradient(180deg,#05080f 0%,var(--bg) 320px),var(--bg)}
+  ::selection{background:rgba(45,212,191,.32)}
+  a{color:var(--sky);text-decoration:none}
   a:hover{text-decoration:underline}
-  .wrap{max-width:1080px;margin:0 auto;padding:28px 20px 64px}
-  /* header */
-  header{display:flex;align-items:center;gap:16px;flex-wrap:wrap;padding:10px 0 6px}
-  .logo{width:52px;height:52px;border-radius:14px;background:linear-gradient(135deg,var(--acc),var(--acc2));display:flex;align-items:center;justify-content:center;font-size:26px;box-shadow:0 8px 28px rgba(77,163,255,.35)}
-  h1{font-size:34px;margin:0;letter-spacing:-.02em}
-  h1 .thin{font-weight:400;color:var(--mut)}
-  .tagline{margin:2px 0 0;color:var(--mut);font-size:15.5px;max-width:640px}
-  .pill{margin-left:auto;display:inline-flex;align-items:center;gap:8px;background:var(--card);border:1px solid var(--line);border-radius:999px;padding:7px 14px;font-size:13px;color:var(--mut)}
-  .dot{width:9px;height:9px;border-radius:50%;background:var(--dim)}
-  .dot.on{background:var(--ok);box-shadow:0 0 10px var(--ok)}
-  .dot.err{background:var(--bad);box-shadow:0 0 10px var(--bad)}
-  /* hero strip */
-  .hero{margin:22px 0 6px;background:linear-gradient(120deg,rgba(77,163,255,.12),rgba(124,92,255,.10));border:1px solid var(--line);border-radius:var(--r);padding:20px 22px}
-  .hero p{margin:0;font-size:16.5px}
-  .hero b{color:#fff}
-  .steps{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:16px}
-  .step{background:rgba(7,11,20,.55);border:1px solid var(--line);border-radius:12px;padding:14px 16px}
-  .step .n{display:inline-block;font-family:var(--mono);font-size:11px;color:var(--acc);border:1px solid var(--line2);border-radius:6px;padding:1px 7px;margin-bottom:7px}
-  .step h3{margin:0 0 4px;font-size:15px}
+  .wrap{max-width:1120px;margin:0 auto;padding:26px 22px 72px}
+  /* top bar */
+  header{display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+  .logo{width:48px;height:48px;border-radius:13px;flex:none;display:flex;align-items:center;justify-content:center;
+    background:linear-gradient(140deg,#0d2b33,#0a1830);border:1px solid var(--line2);
+    box-shadow:0 10px 30px rgba(45,212,191,.18),inset 0 1px 0 rgba(255,255,255,.08)}
+  .wordmark{font-family:var(--disp);font-size:23px;font-weight:700;letter-spacing:-.01em;line-height:1}
+  .wordmark span{color:var(--teal)}
+  .wordsub{font-size:12px;color:var(--dim);letter-spacing:.14em;text-transform:uppercase;margin-top:4px}
+  .pill{margin-left:auto;display:inline-flex;align-items:center;gap:9px;background:var(--panel);border:1px solid var(--line);
+    border-radius:999px;padding:8px 15px;font-size:13px;color:var(--mut);backdrop-filter:blur(8px)}
+  .dot{width:9px;height:9px;border-radius:50%;background:var(--dim);flex:none}
+  .dot.on{background:var(--ok);box-shadow:0 0 12px var(--ok)}
+  .dot.err{background:var(--bad);box-shadow:0 0 12px var(--bad)}
+  /* hero */
+  .hero{margin:34px 0 4px;padding:38px 40px;border-radius:22px;position:relative;overflow:hidden;
+    background:linear-gradient(135deg,rgba(45,212,191,.10),rgba(77,163,255,.08) 55%,rgba(13,22,40,.4));
+    border:1px solid var(--line);backdrop-filter:blur(10px)}
+  .hero::after{content:"";position:absolute;inset:0;pointer-events:none;
+    background:radial-gradient(560px 240px at 85% 0%,rgba(56,189,248,.16),transparent 65%)}
+  .eyebrow{font-size:12px;font-weight:600;letter-spacing:.22em;text-transform:uppercase;color:var(--teal);margin:0 0 14px}
+  .hero h1{font-family:var(--disp);font-size:clamp(34px,5.2vw,54px);line-height:1.04;font-weight:700;letter-spacing:-.02em;margin:0;max-width:720px;position:relative;z-index:1}
+  .hero h1 .grad{background:linear-gradient(92deg,var(--teal),var(--sky) 55%,var(--blue));-webkit-background-clip:text;background-clip:text;color:transparent}
+  .hero .statement{margin:16px 0 0;font-size:16.5px;color:var(--mut);max-width:680px;position:relative;z-index:1}
+  .hero .statement b{color:var(--txt);font-weight:600}
+  .steps{display:grid;grid-template-columns:1fr auto 1fr auto 1fr;gap:12px;align-items:stretch;margin-top:28px;position:relative;z-index:1}
+  .step{background:rgba(4,8,15,.55);border:1px solid var(--line);border-radius:14px;padding:16px 18px}
+  .step .n{display:block;font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;color:var(--teal);margin-bottom:7px}
+  .step h3{font-family:var(--disp);margin:0 0 4px;font-size:16.5px;font-weight:600}
   .step p{margin:0;font-size:13.5px;color:var(--mut)}
+  .arrow{align-self:center;color:var(--dim);font-size:18px}
   /* sections */
-  section{margin-top:30px}
-  .sec-head{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;margin-bottom:12px}
-  h2{font-size:21px;margin:0;letter-spacing:-.01em}
-  .sec-head .sub{color:var(--dim);font-size:13.5px}
-  .card{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:20px 22px}
-  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
-  .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:16px}
-  .stats.five{grid-template-columns:repeat(5,1fr)}
-  .stat{background:var(--card2);border:1px solid var(--line);border-radius:12px;padding:13px 15px}
-  .stat .k{font-size:12px;color:var(--dim);text-transform:uppercase;letter-spacing:.07em}
-  .stat .v{font-size:21px;font-weight:650;margin-top:3px;font-variant-numeric:tabular-nums}
-  .stat .v small{font-size:13px;color:var(--mut);font-weight:400}
+  section{margin-top:38px}
+  .sec-head{display:flex;align-items:baseline;gap:14px;flex-wrap:wrap;margin-bottom:14px}
+  h2{font-family:var(--disp);font-size:23px;font-weight:600;margin:0;letter-spacing:-.01em}
+  .sec-head .sub{color:var(--dim);font-size:13px}
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:var(--r);padding:22px 24px;backdrop-filter:blur(10px);
+    box-shadow:0 18px 44px rgba(0,0,0,.32),inset 0 1px 0 rgba(255,255,255,.04)}
   /* user bar */
-  .userbar{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-bottom:16px}
-  .userbar label{font-size:13px;color:var(--mut)}
-  .userbar input{flex:1;min-width:280px;background:var(--bg2);border:1px solid var(--line2);color:var(--txt);border-radius:10px;padding:9px 12px;font-family:var(--mono);font-size:13px}
-  button{background:linear-gradient(135deg,var(--acc),var(--acc2));border:0;color:#fff;font-weight:600;border-radius:10px;padding:9px 18px;cursor:pointer;font-size:14px}
+  .userbar{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-bottom:18px}
+  .userbar label{font-size:12px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--dim)}
+  .userbar input{flex:1;min-width:280px;background:var(--bg2);border:1px solid var(--line2);color:var(--txt);border-radius:11px;
+    padding:10px 13px;font-family:var(--mono);font-size:13px;outline:none;transition:border-color .15s,box-shadow .15s}
+  .userbar input:focus{border-color:var(--teal);box-shadow:0 0 0 3px rgba(45,212,191,.18)}
+  button{background:linear-gradient(120deg,var(--teal),var(--blue));border:0;color:#04121a;font-weight:700;border-radius:11px;
+    padding:10px 20px;cursor:pointer;font-size:14px;font-family:var(--sans);transition:filter .15s}
+  button:hover{filter:brightness(1.1)}
   button:disabled{opacity:.55;cursor:wait}
-  button.ghost{background:transparent;border:1px solid var(--line2);color:var(--mut)}
+  button.ghost{background:rgba(255,255,255,.03);border:1px solid var(--line2);color:var(--mut);font-weight:600}
+  /* stat tiles */
+  .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:12px}
+  .stats.five{grid-template-columns:repeat(5,1fr);margin-bottom:4px}
+  .stat{background:var(--panel2);border:1px solid var(--line);border-radius:14px;padding:15px 17px}
+  .stat .k{font-size:11px;font-weight:600;color:var(--dim);text-transform:uppercase;letter-spacing:.09em}
+  .stat .v{font-family:var(--disp);font-size:27px;font-weight:600;margin-top:4px;font-variant-numeric:tabular-nums;letter-spacing:-.01em}
+  .stat .v small{font-size:14px;color:var(--mut);font-weight:500}
+  .stat.ok .k{color:var(--ok)} .stat.warn .k{color:var(--warn)}
   /* tables */
+  .tbl-title{font-family:var(--disp);margin:18px 0 4px;font-size:16px;font-weight:600}
   table{width:100%;border-collapse:collapse;font-size:14px}
-  th{ text-align:left;color:var(--dim);font-size:12px;text-transform:uppercase;letter-spacing:.06em;font-weight:600;padding:8px 10px;border-bottom:1px solid var(--line)}
-  td{padding:11px 10px;border-bottom:1px solid rgba(29,44,74,.6);vertical-align:middle}
+  th{text-align:left;color:var(--dim);font-size:11px;text-transform:uppercase;letter-spacing:.08em;font-weight:600;padding:9px 10px;border-bottom:1px solid var(--line2)}
+  td{padding:11px 10px;border-bottom:1px solid rgba(110,150,220,.08);vertical-align:middle}
+  tbody tr{transition:background .12s}
+  tbody tr:hover{background:rgba(255,255,255,.025)}
   tr:last-child td{border-bottom:0}
   .mono{font-family:var(--mono);font-size:12.5px}
   .amt{font-variant-numeric:tabular-nums;font-weight:600;white-space:nowrap}
-  .badge{display:inline-block;border-radius:999px;padding:2px 10px;font-size:12px;font-weight:600}
-  .badge.paid{background:rgba(47,212,140,.13);color:var(--ok);border:1px solid rgba(47,212,140,.35)}
-  .badge.skipped{background:rgba(255,182,72,.12);color:var(--warn);border:1px solid rgba(255,182,72,.35)}
+  .badge{display:inline-block;border-radius:999px;padding:3px 11px;font-size:12px;font-weight:600;white-space:nowrap}
+  .badge.paid{background:rgba(52,211,153,.12);color:var(--ok);border:1px solid rgba(52,211,153,.38)}
+  .badge.skipped{background:rgba(251,191,36,.10);color:var(--warn);border:1px solid rgba(251,191,36,.38)}
   .empty{color:var(--dim);padding:16px 10px;font-size:14px}
   .skel{color:var(--dim);font-size:14px;padding:8px 0}
   /* contracts */
   .contracts{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
-  .contract{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:18px 20px}
-  .contract h3{margin:0 0 2px;font-size:16.5px}
+  .contract{background:var(--panel);border:1px solid var(--line);border-radius:var(--r);padding:20px 22px;backdrop-filter:blur(10px);
+    box-shadow:0 14px 36px rgba(0,0,0,.28),inset 0 1px 0 rgba(255,255,255,.04)}
+  .contract h3{font-family:var(--disp);margin:0 0 2px;font-size:17.5px;font-weight:600}
   .contract .chain{color:var(--dim);font-size:12.5px;margin-bottom:10px}
-  .contract .addr{font-family:var(--mono);font-size:12px;word-break:break-all;color:var(--mut);background:var(--bg2);border:1px solid var(--line);border-radius:8px;padding:8px 10px;margin-bottom:12px}
+  .contract p.role{font-size:13.5px;color:var(--mut);margin:0 0 13px}
+  .contract .addr{font-family:var(--mono);font-size:11.5px;word-break:break-all;color:var(--mut);background:var(--bg2);
+    border:1px solid var(--line);border-radius:9px;padding:9px 11px;margin-bottom:13px}
   .contract .links{display:flex;gap:8px;flex-wrap:wrap}
-  .chip{display:inline-block;border:1px solid var(--line2);border-radius:999px;padding:4px 12px;font-size:12.5px;color:var(--txt)}
-  .chip:hover{border-color:var(--acc);text-decoration:none}
-  .chip.verified{border-color:rgba(47,212,140,.45);color:var(--ok)}
-  .contract p.role{font-size:13.5px;color:var(--mut);margin:0 0 12px}
+  .chip{display:inline-block;border:1px solid var(--line2);border-radius:999px;padding:5px 13px;font-size:12.5px;color:var(--txt);transition:border-color .15s}
+  .chip:hover{border-color:var(--teal);text-decoration:none}
+  .chip.verified{border-color:rgba(52,211,153,.45);color:var(--ok)}
   /* loops */
   .loops{display:grid;grid-template-columns:1fr 1fr;gap:14px}
-  .loop{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:18px 20px}
-  .loop-head{display:flex;align-items:center;gap:10px;margin-bottom:6px}
-  .loop-head h3{margin:0;font-size:16.5px}
-  .latency{margin-left:auto;background:rgba(47,212,140,.12);border:1px solid rgba(47,212,140,.35);color:var(--ok);border-radius:999px;padding:3px 12px;font-size:12.5px;font-weight:700}
+  .loop{background:var(--panel);border:1px solid var(--line);border-radius:var(--r);padding:20px 22px;backdrop-filter:blur(10px);
+    box-shadow:0 14px 36px rgba(0,0,0,.28),inset 0 1px 0 rgba(255,255,255,.04)}
   .loop.wide{grid-column:1/-1}
-  .loop .meta{color:var(--mut);font-size:13.5px;margin:0 0 12px}
-  .flow{display:flex;flex-direction:column;gap:0}
+  .loop-head{display:flex;align-items:center;gap:10px;margin-bottom:6px}
+  .loop-head h3{font-family:var(--disp);margin:0;font-size:16.5px;font-weight:600}
+  .latency{margin-left:auto;flex:none;background:rgba(52,211,153,.10);border:1px solid rgba(52,211,153,.35);color:var(--ok);
+    border-radius:999px;padding:3px 12px;font-size:12.5px;font-weight:700}
+  .loop .meta{color:var(--mut);font-size:13.5px;margin:0 0 14px}
+  .loop .meta b{color:var(--txt)}
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:22px}
+  .flow{display:flex;flex-direction:column}
   .flow .row{display:flex;gap:12px;align-items:flex-start}
   .flow .rail{display:flex;flex-direction:column;align-items:center}
-  .flow .node{width:11px;height:11px;border-radius:50%;background:var(--acc);margin-top:5px;flex:none}
-  .flow .bar{width:2px;flex:1;min-height:16px;background:var(--line2)}
+  .flow .node{width:11px;height:11px;border-radius:50%;flex:none;margin-top:5px;
+    background:linear-gradient(135deg,var(--teal),var(--blue));box-shadow:0 0 10px rgba(45,212,191,.45)}
+  .flow .bar{width:2px;flex:1;min-height:16px;background:linear-gradient(180deg,rgba(45,212,191,.5),rgba(77,163,255,.35))}
   .flow .body{padding-bottom:14px}
   .flow .row:last-child .body{padding-bottom:0}
   .flow .t{font-weight:600;font-size:14px}
   .flow .t .net{color:var(--dim);font-weight:400;font-size:12.5px}
   .flow .h{font-family:var(--mono);font-size:12px;color:var(--mut);word-break:break-all}
-  footer{margin-top:40px;color:var(--dim);font-size:13px;border-top:1px solid var(--line);padding-top:18px}
-  .err-box{display:none;background:rgba(255,107,129,.08);border:1px solid rgba(255,107,129,.35);color:#ffb3c0;border-radius:12px;padding:12px 16px;font-size:14px;margin-bottom:14px}
-  @media (max-width:860px){.steps,.contracts,.loops,.grid2{grid-template-columns:1fr}.stats,.stats.five{grid-template-columns:1fr 1fr}.pill{margin-left:0}}
+  footer{margin-top:46px;color:var(--dim);font-size:13px;border-top:1px solid var(--line);padding-top:18px}
+  .err-box{display:none;background:rgba(251,113,133,.08);border:1px solid rgba(251,113,133,.35);color:#ffb3c0;border-radius:12px;padding:12px 16px;font-size:14px;margin-bottom:14px}
+  @media (max-width:920px){
+    .steps{grid-template-columns:1fr}.arrow{display:none}
+    .contracts,.loops,.grid2{grid-template-columns:1fr}
+    .stats{grid-template-columns:1fr 1fr}.stats.five{grid-template-columns:1fr 1fr}
+    .hero{padding:28px 22px}.pill{margin-left:0}
+  }
 </style>
 <!-- ethers v6 is loaded ONLY as an ES module via importmap (UMD loading silently breaks live data). -->
 <script type="importmap">
@@ -114,25 +158,31 @@
 <div class="wrap">
 
   <header>
-    <div class="logo">🧾</div>
+    <div class="logo" aria-hidden="true">
+      <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#2dd4bf" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2.8h9L19 6.8V21a.9.9 0 0 1-.9.9H6A.9.9 0 0 1 5.1 21V3.7A.9.9 0 0 1 6 2.8Z" stroke="#4da3ff"/><path d="M14.5 3v4.5H19"/><path d="m8.6 14.6 2.3 2.3 4.4-4.6" stroke="#2dd4bf"/></svg>
+    </div>
     <div>
-      <h1>BillPilot <span class="thin">— bill autopay that runs itself</span></h1>
-      <p class="tagline">Register your fixed payees once. Every deposit into your vault is paid out automatically — by the chain, not by a bot.</p>
+      <div class="wordmark">Bill<span>Pilot</span></div>
+      <div class="wordsub">Reactive Network · Omni</div>
     </div>
     <div class="pill"><span class="dot" id="statusDot"></span><span id="statusText">connecting to Base Sepolia…</span></div>
   </header>
 
   <div class="hero">
-    <p><b>Set it and forget it.</b> Salary lands in the vault → a reactive contract on Reactive Lasna sees the deposit → a callback on Base Sepolia pays every payee their fixed amount. Payees the balance can't cover are skipped and recorded, never blocking the rest. Leftover funds stay in the vault and can be withdrawn any time.</p>
+    <p class="eyebrow">Set It and Forget It · Reactive Omni Buildathon</p>
+    <h1>Fixed bills, paid the moment money lands — <span class="grad">by the chain itself.</span></h1>
+    <p class="statement">Register your payees once. Every deposit into your vault pays each payee their fixed amount automatically — <b>no bots, no keepers, no manual transfers</b>. Payees the balance can't cover are skipped and recorded on-chain; leftovers stay in the vault, withdrawable any time.</p>
     <div class="steps">
-      <div class="step"><span class="n">STEP 1 · BASE SEPOLIA</span><h3>Deposit</h3><p>You call <span class="mono">deposit()</span> on BillVault. It credits your balance and emits <span class="mono">DepositReceived</span>.</p></div>
-      <div class="step"><span class="n">STEP 2 · REACTIVE LASNA</span><h3>React</h3><p>BillPilotReactive is subscribed to that event. It fires instantly and requests a callback via Omni <span class="mono">requestCallbackV_1_0</span>.</p></div>
-      <div class="step"><span class="n">STEP 3 · BASE SEPOLIA</span><h3>Get paid out</h3><p>The callback proxy delivers to BillExecutor, which runs <span class="mono">payAll()</span> on the vault. History is written on-chain.</p></div>
+      <div class="step"><span class="n">STEP 1 · BASE SEPOLIA</span><h3>Deposit</h3><p><span class="mono">deposit()</span> on BillVault credits your balance and emits <span class="mono">DepositReceived</span>.</p></div>
+      <div class="arrow">→</div>
+      <div class="step"><span class="n">STEP 2 · REACTIVE LASNA</span><h3>React</h3><p>BillPilotReactive fires instantly and requests the callback via <span class="mono">requestCallbackV_1_0</span>.</p></div>
+      <div class="arrow">→</div>
+      <div class="step"><span class="n">STEP 3 · BASE SEPOLIA</span><h3>Payout</h3><p>BillExecutor runs <span class="mono">payAll()</span> on the vault. History is written on-chain.</p></div>
     </div>
   </div>
 
   <section>
-    <div class="sec-head"><h2>Live vault — read straight from Base Sepolia</h2><span class="sub">read-only, no wallet needed · auto-refreshes</span></div>
+    <div class="sec-head"><h2>Live vault</h2><span class="sub">read straight from Base Sepolia · auto-refreshes</span></div>
     <div class="err-box" id="errBox"></div>
     <div class="card">
       <div class="userbar">
@@ -147,19 +197,19 @@
         <div class="stat"><div class="k">Payees registered</div><div class="v" id="stPayees">—</div></div>
         <div class="stat"><div class="k">Total deposits (all users)</div><div class="v" id="stDeposits">—</div></div>
       </div>
-      <div class="stats five" style="margin-top:-8px">
+      <div class="stats five">
         <div class="stat"><div class="k">Payment records</div><div class="v" id="stRecords">—</div></div>
-        <div class="stat"><div class="k">Paid</div><div class="v" id="stPaid">—</div></div>
-        <div class="stat"><div class="k">Skipped</div><div class="v" id="stSkipped">—</div></div>
+        <div class="stat ok"><div class="k">Paid</div><div class="v" id="stPaid">—</div></div>
+        <div class="stat warn"><div class="k">Skipped</div><div class="v" id="stSkipped">—</div></div>
         <div class="stat"><div class="k">Total paid out</div><div class="v" id="stPaidOut">—</div></div>
         <div class="stat"><div class="k">Vault balance</div><div class="v" id="stStripBalance">—</div></div>
       </div>
-      <h3 style="margin:4px 0 6px;font-size:15.5px">Payees — paid automatically on every deposit</h3>
+      <h3 class="tbl-title">Payees</h3>
       <table>
         <thead><tr><th>Label</th><th>Wallet</th><th style="text-align:right">Fixed amount</th></tr></thead>
         <tbody id="payeeBody"><tr><td colspan="3" class="skel">Loading payees from BillVault.getPayees()…</td></tr></tbody>
       </table>
-      <h3 style="margin:20px 0 6px;font-size:15.5px">Payment history — on-chain record</h3>
+      <h3 class="tbl-title">Payment history</h3>
       <table>
         <thead><tr><th>When</th><th>Payee</th><th>Deposit</th><th style="text-align:right">Amount</th><th style="text-align:right">Result</th></tr></thead>
         <tbody id="histBody"><tr><td colspan="5" class="skel">Loading history from BillVault.getHistory()…</td></tr></tbody>
@@ -172,7 +222,7 @@
     <div class="contracts">
       <div class="contract">
         <h3>BillVault</h3><div class="chain">Base Sepolia · chain 84532 · origin &amp; funds</div>
-        <p class="role">Holds deposits, stores each user's fixed payee list, executes payout batches, keeps the payment history.</p>
+        <p class="role">Holds deposits and each user's fixed payee list; executes payout batches; keeps the payment history.</p>
         <div class="addr">0x05Abd6e0a636B4D5ACB98540dc6b1f23D71F57b3</div>
         <div class="links">
           <a class="chip" href="https://sepolia.basescan.org/address/0x05Abd6e0a636B4D5ACB98540dc6b1f23D71F57b3" target="_blank" rel="noopener">Basescan ↗</a>
@@ -181,7 +231,7 @@
       </div>
       <div class="contract">
         <h3>BillPilotReactive</h3><div class="chain">Reactive Lasna · chain 5318007 · reactive contract</div>
-        <p class="role">Subscribes to <span class="mono">DepositReceived</span> on Base Sepolia and requests the payout callback via the Omni system contract.</p>
+        <p class="role">Subscribes to <span class="mono">DepositReceived</span> on Base Sepolia; requests the payout callback via the Omni system contract.</p>
         <div class="addr">0x35e3D4cdCd2EdFF55cDeb0c0710A8bF45e126871</div>
         <div class="links">
           <a class="chip" href="https://lasna.reactscan.net/address/0x35e3D4cdCd2EdFF55cDeb0c0710A8bF45e126871" target="_blank" rel="noopener">Reactscan ↗</a>
@@ -190,7 +240,7 @@
       </div>
       <div class="contract">
         <h3>BillExecutor</h3><div class="chain">Base Sepolia · chain 84532 · callback receiver</div>
-        <p class="role">Receives callbacks through the official Reactive callback proxy and triggers <span class="mono">payAll()</span> on the vault.</p>
+        <p class="role">Receives callbacks through the official Reactive callback proxy; triggers <span class="mono">payAll()</span> on the vault.</p>
         <div class="addr">0xFc2979342D96EeB950ba8246bCc8DF1868F3Df88</div>
         <div class="links">
           <a class="chip" href="https://sepolia.basescan.org/address/0xFc2979342D96EeB950ba8246bCc8DF1868F3Df88" target="_blank" rel="noopener">Basescan ↗</a>
@@ -201,11 +251,11 @@
   </section>
 
   <section>
-    <div class="sec-head"><h2>Proven on-chain — six full loops</h2><span class="sub">deposit → reactive → callback for every loop · Loops 4–6 were run post-submission as additional live demonstrations</span></div>
+    <div class="sec-head"><h2>Proven on-chain — six full loops</h2><span class="sub">deposit → reactive → callback for every loop · Loops 4–6 post-submission</span></div>
     <div class="loops">
       <div class="loop">
         <div class="loop-head"><h3>Loop 1 · deposit 0.0015 ETH</h3><span class="latency">⚡ 1 s end-to-end</span></div>
-        <p class="meta">Payees at the time: Kos 0.0006 ETH · Langganan 0.0004 ETH — both paid in full. Vault leftover: 0.0005 ETH.</p>
+        <p class="meta">Kos 0.0006 ETH · Langganan 0.0004 ETH — both paid in full. Vault leftover: 0.0005 ETH.</p>
         <div class="flow">
           <div class="row"><div class="rail"><div class="node"></div><div class="bar"></div></div><div class="body"><div class="t">Deposit <span class="net">· Base Sepolia</span></div><div class="h"><a href="https://base-sepolia.blockscout.com/tx/0xf9000609969f46b30ed777a7d8480814a8f07b6251bd068c26237f5a4964be4f" target="_blank" rel="noopener">0xf9000609…be4f</a></div></div></div>
           <div class="row"><div class="rail"><div class="node"></div><div class="bar"></div></div><div class="body"><div class="t">Reactive <span class="net">· Lasna</span></div><div class="h"><a href="https://lasna.reactscan.net/tx/0xf9057e084cace5328f8fde93251c2a14c6b82e197937cc1c0bcc6abf9f35c081" target="_blank" rel="noopener">0xf9057e08…c081</a></div></div></div>
@@ -223,7 +273,7 @@
       </div>
       <div class="loop">
         <div class="loop-head"><h3>Loop 3 · deposit 0.0004 ETH</h3><span class="latency">⚡ 1 s end-to-end</span></div>
-        <p class="meta">The demo-video loop. Payees unchanged: Kos 0.0003 ETH · Langganan 0.0002 ETH — both paid again. Vault leftover: 0.0009 ETH. On-chain history reached 6 records, all Paid.</p>
+        <p class="meta">The demo-video loop. Kos 0.0003 ETH · Langganan 0.0002 ETH — both paid again. Vault leftover: 0.0009 ETH. History reached 6 records, all Paid.</p>
         <div class="flow">
           <div class="row"><div class="rail"><div class="node"></div><div class="bar"></div></div><div class="body"><div class="t">Deposit <span class="net">· Base Sepolia</span></div><div class="h"><a href="https://base-sepolia.blockscout.com/tx/0x94adef28319ad0d588399c375622ddbe9a4293f0f6bcb6882f11459a1ef8200e" target="_blank" rel="noopener">0x94adef28…200e</a></div></div></div>
           <div class="row"><div class="rail"><div class="node"></div><div class="bar"></div></div><div class="body"><div class="t">Reactive <span class="net">· Lasna</span></div><div class="h"><a href="https://lasna.reactscan.net/tx/0x6255d07673badabb5aa73f98c9500ff9549039b3173d2a1dfd417f2f07c6f6df" target="_blank" rel="noopener">0x6255d076…6f6df</a></div></div></div>
@@ -232,7 +282,7 @@
       </div>
       <div class="loop">
         <div class="loop-head"><h3>Loop 4 · deposit 0.0005 ETH — the skip path</h3><span class="latency">⚡ 1 s end-to-end</span></div>
-        <p class="meta">Post-submission demonstration (16 Nov 2026). Payees re-set to Kos 0.0004 ETH · Langganan 0.0008 ETH, vault emptied, then a deliberately short deposit: Kos paid, Langganan <b>skipped</b> (<span class="mono">PaymentSkipped</span>, 0.0001 left &lt; 0.0008) — the first on-chain Skipped record. <span class="mono">withdraw()</span> proven live twice: <a href="https://base-sepolia.blockscout.com/tx/0xfab12af2da95fe701c8f24fad2859b169eaf984cc880c82cb653d493b9e8604e" target="_blank" rel="noopener">0.0009 ETH out</a> before, <a href="https://base-sepolia.blockscout.com/tx/0x2d18d85db5f120930a541739796bed7b16ee2ae49584f4a7bdc097bcb00b83c5" target="_blank" rel="noopener">0.0001 ETH out</a> after. Payees restored afterwards.</p>
+        <p class="meta">Post-submission · 16 Nov 2026. Payees re-set to Kos 0.0004 ETH · Langganan 0.0008 ETH, vault emptied, then a deliberately short deposit: Kos paid, Langganan <b>skipped</b> (<span class="mono">PaymentSkipped</span>, 0.0001 left &lt; 0.0008) — the first on-chain Skipped record. <span class="mono">withdraw()</span> proven live twice: <a href="https://base-sepolia.blockscout.com/tx/0xfab12af2da95fe701c8f24fad2859b169eaf984cc880c82cb653d493b9e8604e" target="_blank" rel="noopener">0.0009 ETH out</a> before, <a href="https://base-sepolia.blockscout.com/tx/0x2d18d85db5f120930a541739796bed7b16ee2ae49584f4a7bdc097bcb00b83c5" target="_blank" rel="noopener">0.0001 ETH out</a> after. Payees restored afterwards.</p>
         <div class="flow">
           <div class="row"><div class="rail"><div class="node"></div><div class="bar"></div></div><div class="body"><div class="t">Deposit <span class="net">· Base Sepolia</span></div><div class="h"><a href="https://base-sepolia.blockscout.com/tx/0xb5c928eba2734f66f0f34a1edbc288985079927a0502495172db6acd561169bb" target="_blank" rel="noopener">0xb5c928eb…69bb</a></div></div></div>
           <div class="row"><div class="rail"><div class="node"></div><div class="bar"></div></div><div class="body"><div class="t">Reactive <span class="net">· Lasna</span></div><div class="h"><a href="https://lasna.reactscan.net/tx/0x457bc158ae60f0ab7ea8cb42d1d0ab7d803b2316690b622952f90853e9464885" target="_blank" rel="noopener">0x457bc158…4885</a></div></div></div>
@@ -241,7 +291,7 @@
       </div>
       <div class="loop wide">
         <div class="loop-head"><h3>Loop 5 · payee flexibility — a payee added, an amount changed</h3></div>
-        <p class="meta">Post-submission demonstration (16 Nov 2026). A third payee, <b>Internet</b> (<span class="mono">0x8C6b…84ED</span>), joins the list; then Langganan's amount is raised and the next deposit pays the <i>new</i> amount — proof that <span class="mono">setPayees</span> changes take effect on the very next loop. Payees were restored to Kos 0.0003 · Langganan 0.0002 afterwards, so the live state above matches Loops 1–3.</p>
+        <p class="meta">Post-submission · 16 Nov 2026. A third payee, <b>Internet</b> (<span class="mono">0x8C6b…84ED</span>), joins the list; then Langganan's amount is raised and the next deposit pays the <i>new</i> amount — <span class="mono">setPayees</span> changes take effect on the very next loop. Payees restored to Kos 0.0003 · Langganan 0.0002 afterwards, so the live state above matches Loops 1–3.</p>
         <div class="grid2">
           <div>
             <div class="loop-head"><h3 style="font-size:15px">5a · deposit 0.00027 ETH — three payees, all paid</h3><span class="latency">⚡ 1 s</span></div>
@@ -265,7 +315,7 @@
       </div>
       <div class="loop">
         <div class="loop-head"><h3>Loop 6 · deposit 0.0004 ETH — a second, independent user</h3><span class="latency">⚡ 1 s end-to-end</span></div>
-        <p class="meta">Post-submission demonstration (27 Nov 2026). A fresh wallet (<span class="mono">0xD37e…B938</span>) set its own payees — Kos 0.0002 ETH · Internet 0.0001 ETH — and deposited 0.0004 ETH. The same vault, reactive contract and executor paid both payees in full, with no configuration change; the first user's payees, history and balance were left completely untouched. History reached 16 records: 14 Paid · 2 Skipped.</p>
+        <p class="meta">Post-submission · 27 Nov 2026. A fresh wallet (<span class="mono">0xD37e…B938</span>) set its own payees — Kos 0.0002 ETH · Internet 0.0001 ETH — and deposited 0.0004 ETH. The same vault, reactive contract and executor paid both payees in full, no configuration change; the first user left completely untouched. History reached 16 records: 14 Paid · 2 Skipped.</p>
         <div class="flow">
           <div class="row"><div class="rail"><div class="node"></div><div class="bar"></div></div><div class="body"><div class="t">Deposit <span class="net">· Base Sepolia</span></div><div class="h"><a href="https://base-sepolia.blockscout.com/tx/0x2ac94b1efefb8ff4a730fc9bfa87d6dcd8b0721cebb3bfa0799187fd2b5abb5a" target="_blank" rel="noopener">0x2ac94b1e…bb5a</a></div></div></div>
           <div class="row"><div class="rail"><div class="node"></div><div class="bar"></div></div><div class="body"><div class="t">Reactive <span class="net">· Lasna</span></div><div class="h"><a href="https://lasna.reactscan.net/tx/0xad716fc60bc69d74fe56b8975d08f618d01830bf9fac9eefa104288d39a9b823" target="_blank" rel="noopener">0xad716fc6…b823</a></div></div></div>
