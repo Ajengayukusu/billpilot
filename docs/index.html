@@ -201,7 +201,7 @@
   </section>
 
   <section>
-    <div class="sec-head"><h2>Proven on-chain — five full loops</h2><span class="sub">deposit → reactive → callback for every loop · Loops 4–5 were run post-submission as additional live demonstrations</span></div>
+    <div class="sec-head"><h2>Proven on-chain — six full loops</h2><span class="sub">deposit → reactive → callback for every loop · Loops 4–6 were run post-submission as additional live demonstrations</span></div>
     <div class="loops">
       <div class="loop">
         <div class="loop-head"><h3>Loop 1 · deposit 0.0015 ETH</h3><span class="latency">⚡ 1 s end-to-end</span></div>
@@ -263,11 +263,20 @@
           </div>
         </div>
       </div>
+      <div class="loop">
+        <div class="loop-head"><h3>Loop 6 · deposit 0.0004 ETH — a second, independent user</h3><span class="latency">⚡ 1 s end-to-end</span></div>
+        <p class="meta">Post-submission demonstration (27 Nov 2026). A fresh wallet (<span class="mono">0xD37e…B938</span>) set its own payees — Kos 0.0002 ETH · Internet 0.0001 ETH — and deposited 0.0004 ETH. The same vault, reactive contract and executor paid both payees in full, with no configuration change; the first user's payees, history and balance were left completely untouched. History reached 16 records: 14 Paid · 2 Skipped.</p>
+        <div class="flow">
+          <div class="row"><div class="rail"><div class="node"></div><div class="bar"></div></div><div class="body"><div class="t">Deposit <span class="net">· Base Sepolia</span></div><div class="h"><a href="https://base-sepolia.blockscout.com/tx/0x2ac94b1efefb8ff4a730fc9bfa87d6dcd8b0721cebb3bfa0799187fd2b5abb5a" target="_blank" rel="noopener">0x2ac94b1e…bb5a</a></div></div></div>
+          <div class="row"><div class="rail"><div class="node"></div><div class="bar"></div></div><div class="body"><div class="t">Reactive <span class="net">· Lasna</span></div><div class="h"><a href="https://lasna.reactscan.net/tx/0xad716fc60bc69d74fe56b8975d08f618d01830bf9fac9eefa104288d39a9b823" target="_blank" rel="noopener">0xad716fc6…b823</a></div></div></div>
+          <div class="row"><div class="rail"><div class="node"></div></div><div class="body"><div class="t">Callback <span class="net">· Base Sepolia · 2× PaymentMade</span></div><div class="h"><a href="https://base-sepolia.blockscout.com/tx/0x62192c0a02a7421d43d3f46e490ebd3dd6248babd6d12b589e15154eb7237913" target="_blank" rel="noopener">0x62192c0a…7913</a></div></div></div>
+        </div>
+      </div>
     </div>
   </section>
 
   <footer>
-    BillPilot · built for the Reactive Omni Buildathon (DoraHacks), track <b>Set It and Forget It</b> · Testnet only — Base Sepolia + Reactive Lasna · Debt after all five loops: 0 on both sides · <a href="https://github.com/Ajengayukusu/billpilot" target="_blank" rel="noopener">Source on GitHub</a>
+    BillPilot · built for the Reactive Omni Buildathon (DoraHacks), track <b>Set It and Forget It</b> · Testnet only — Base Sepolia + Reactive Lasna · Debt after all six loops: 0 on both sides · <a href="https://github.com/Ajengayukusu/billpilot" target="_blank" rel="noopener">Source on GitHub</a>
   </footer>
 </div>
 
